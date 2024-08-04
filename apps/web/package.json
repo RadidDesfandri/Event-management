@@ -10,6 +10,8 @@
     "test": "npx cypress verify & cypress run --component"
   },
   "dependencies": {
+    "@nextui-org/navbar": "^2.0.36",
+    "@react-icons/all-files": "^4.1.0",
     "@supabase/supabase-js": "^2.45.0",
     "cross-env": "^7.0.3",
     "embla-carousel-react": "^8.1.8",
