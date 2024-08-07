@@ -23,7 +23,7 @@ export default function SideBar() {
         <div className='hidden sticky z-20 top-16 md:flex flex-col justify-between w-1/12 h-[490px] '>
             <div className='flex flex-col gap-8'>
                 <Link href={'/beranda'}><MdHome className='w-9 h-9 hover:text-white transition-all duration-200 hover:bg-gray-800 rounded-md p-1 text-gray-300' /></Link>
-                <Link href={'/beranda'}><IoIosCreate className='w-9 h-9 hover:text-white transition-all duration-200 hover:bg-gray-800 rounded-md p-1 text-gray-300' /></Link>
+                <Link href={'/create'}><IoIosCreate className='w-9 h-9 hover:text-white transition-all duration-200 hover:bg-gray-800 rounded-md p-1 text-gray-300' /></Link>
                 <Link href={'/beranda'}><IoIosNotifications className='w-9 h-9 hover:text-white transition-all duration-200 hover:bg-gray-800 rounded-md p-1 text-gray-300    ' /></Link>
             </div>
 
