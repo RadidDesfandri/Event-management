@@ -1,5 +1,6 @@
 import Hero from '@/components/berandatamu/hero'
 import Recomend from '@/components/berandatamu/recomend'
+import { Footer } from '@/components/Footer'
 import ModalLogOut from '@/components/modal/modalLogOut'
 import NavTop from '@/components/navTop'
 import SideBar from '@/components/sideBar'
@@ -14,6 +15,7 @@ export default function Page() {
         <Hero />
         <Recomend />
       </div>
+      <Footer />
     </div>
   )
 }

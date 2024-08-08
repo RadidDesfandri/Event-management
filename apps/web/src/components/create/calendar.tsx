@@ -1,25 +1,41 @@
 "use client"
 
 import React from 'react'
-import { today, getLocalTimeZone, isWeekend } from "@internationalized/date";
-import { useLocale } from "@react-aria/i18n";
-import { Calendar } from '@nextui-org/calendar';
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
+import { ErrorMessage, Form, Formik, useField } from "formik";
 
 
-export const Kalendar = () => {
-    let [date, setDate] = React.useState(today(getLocalTimeZone()));
-    let { locale } = useLocale();
-    let isInvalid = isWeekend(date, locale);
+export const DatePickers = ({ name = '', placeholder = '' }) => {
+    const [field, meta, helpers] = useField(name);
+
+    const { value } = meta;
+    const { setValue } = helpers;
 
     return (
-        <div className='text-white rounded-md  bg-black'>
-            <Calendar
-                aria-label="Date (Invalid on weekends)"
-                errorMessage={isInvalid ? "We are closed on weekends" : undefined}
-                isInvalid={isInvalid}
-                value={date}
-                onChange={setDate}
-            />
-        </div>
-    )
-}
+        <DatePicker
+            {...field}
+            selected={value}
+            onChange={(date) => setValue(date)}
+            placeholderText={placeholder}
+            className='w-full border-b bg-transparent text-black focus:border-blue-700 border-gray-500 outline-none h-10 pb-3'
+        />
+    );
+};
+
+export const DatePickers2 = ({ name = '', placeholder = '' }) => {
+    const [field, meta, helpers] = useField(name);
+
+    const { value } = meta;
+    const { setValue } = helpers;
+
+    return (
+        <DatePicker
+            {...field}
+            selected={value}
+            onChange={(date) => setValue(date)}
+            placeholderText={placeholder}
+            className='w-full cursor-pointer bg-transparent text-black outline-none'
+        />
+    );
+};
