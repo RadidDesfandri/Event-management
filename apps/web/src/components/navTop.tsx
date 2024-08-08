@@ -25,10 +25,10 @@ export default function NavTop() {
         <Navbar shouldHideOnScroll className='z-20'>
             <section className='w-full sticky top-0 backdrop-blur-lg bg-transparent'>
                 <div className='max-w-7xl h-16 mx-auto md:px-10 px-5 flex items-center justify-between'>
-                    <div className='flex w-full md:w-[922px] justify-between items-center'>
-                        <Link href={'/'}><Logo /></Link>
+                    <div className='flex w-full md:w-[640px] lg:w-[898px] md:justify-around justify-between lg:justify-between items-center'>
+                        <Link href={'#'}><Logo /></Link>
                         <div className='flex gap-2 items-center'>
-                            <div className='backdrop-blur-md md:ml-6 px-3 flex bg-white/20 rounded-lg w-[180px] md:w-[830px] items-center md:px-5'>
+                            <div className='backdrop-blur-md md:ml-6 px-3 flex bg-white/20 rounded-lg w-[180px] md:w-[350px] lg:w-[802px] items-center md:px-5'>
                                 <input type="text" placeholder='Cari event seru di sini' className='md:h-10 h-9 placeholder-white placeholder:text-sm md:placeholder:text-base bg-transparent rounded-md w-full focus:outline-none text-white' />
                                 <IoIosSearch className='text-white w-5 h-5 cursor-pointer' />
                             </div>
@@ -40,6 +40,8 @@ export default function NavTop() {
                     <div className='gap-3 hidden md:flex text-gray-100'>
                         <Image onClick={openModal} src={'/pameran1.jpg'} alt='Profile' width={100} height={100} className='w-10 h-10 rounded-full object-cover cursor-pointer' />
                     </div>
+
+
                     <ModalProfile isOpen={isModalOpen} onClose={closeModal}>
                         <div className=' flex flex-col'>
                             <div className='flex gap-2 items-center border-b pb-3'>
@@ -56,6 +58,7 @@ export default function NavTop() {
                             </div>
                         </div>
                     </ModalProfile>
+
 
                 </div>
             </section>
