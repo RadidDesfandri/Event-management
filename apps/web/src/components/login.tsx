@@ -1,9 +1,8 @@
-
-
 import Image from "next/image";
 import Link from "next/link";
 import AddEmail from "./addLoginEmail";
 import AddLoginEmail from "./addLoginEmail";
+import AddRegisterEmail from "./addRegisterEmail";
 
 export default function LoginComp() {
     return (
@@ -34,6 +33,7 @@ export default function LoginComp() {
                         <div className="flex flex-col w-96 p-8 rounded-2xl shadow-xl items-center bg-gray-50">
                             <p className="pb-3 pl-9 text-gray-600 mr-80">email</p>
                             <AddLoginEmail />
+                            <AddRegisterEmail />
                         </div>
                     </div>
                 </div>
