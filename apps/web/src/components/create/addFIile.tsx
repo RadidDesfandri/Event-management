@@ -1,6 +1,9 @@
 "use client"
 
 import React, { useState } from 'react'
+"use client"
+
+import React, { useState } from 'react'
 import { FaCalendarAlt } from "react-icons/fa";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { IoLocationSharp } from "react-icons/io5";
