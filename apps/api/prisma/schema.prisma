@@ -10,12 +10,100 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum Ticket {
+  free
+  paid
+}
 
-  @@map("samples") // if you want to use snake_case format
+enum Cetegory {
+  konser
+  pertandingan
+  cosplay
+  pameran
+}
+
+enum Status {
+  pending
+  waiting
+  paid
+  declined
+}
+
+model User {
+  id          Int           @unique @default(autoincrement())
+  username    String        @unique
+  email       String        @unique
+  password    String
+  phone       String        @unique
+  referal     String        @unique
+  point       Int
+  avatar      String?
+  isVerified  Boolean       @default(false)
+  Transaction Transaction[]
+  Review      Review[]
+}
+
+model EO {
+  id         Int      @unique @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  phone      String   @unique
+  avatar     String?
+  isVerified Boolean  @default(false)
+  Events     Events?
+}
+
+model Review {
+  id       Int    @unique @default(autoincrement())
+  review   String @db.Text
+  ratings  Int
+  user_Id  Int    @unique
+  event_Id Int    @unique
+  user     User   @relation(fields: [user_Id], references: [id])
+  event    Events @relation(fields: [event_Id], references: [id])
+}
+
+model Events {
+  id          Int           @unique @default(autoincrement())
+  eventName   String        @unique
+  price       Float
+  date        String
+  location    String
+  description String        @db.Text
+  quota       Int
+  ticketType  Ticket
+  eo_Id       Int           @unique
+  image       String?
+  category    Cetegory
+  Transaction Transaction[]
+  Review      Review[]
+  Promotion   Promotion[]
+  eo          EO?            @relation(fields: [eo_Id], references: [id])
+}
+
+model Transaction {
+  id            Int      @unique @default(autoincrement())
+  event_Id      Int      @unique
+  user_Id       Int      @unique
+  qty           Int      @default(1)
+  totalPrice    Float
+  totalDiscount Int
+  finalPrice    Float
+  status        Status
+  proof         String
+  created_at    DateTime @default(now())
+  user          User     @relation(fields: [user_Id], references: [id])
+  event         Events   @relation(fields: [event_Id], references: [id])
+}
+
+model Promotion {
+  id          Int      @unique @default(autoincrement())
+  startDate   DateTime
+  endDate     DateTime
+  voucherCode String
+  quota       Int?
+  percentage  Int?
+  event_Id    Int      @unique
+  event       Events   @relation(fields: [event_Id], references: [id])
 }
