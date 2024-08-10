@@ -2,9 +2,10 @@ import React from 'react'
 import { IoIosSearch } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import Logo from '../logo';
-import { Navbar } from '@nextui-org/navbar';
+// import { Navbar } from '@nextui-org/navbar';
 import Link from 'next/link';
 import Button from '../button';
+import { Navbar } from '@nextui-org/navbar';
 
 export default function NavTopTamu() {
     return (
