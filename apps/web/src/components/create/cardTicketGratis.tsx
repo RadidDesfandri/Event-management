@@ -12,11 +12,13 @@ import * as yup from 'yup'
 interface FormValue {
     namatiket: string;
     jmlhtiket: string;
+    date?: string;
 }
 
 const dataSchema = yup.object().shape({
     namatiket: yup.string().required('Harap diisi').max(50, "Maksimal 50 karakter"),
     jmlhtiket: yup.string().required("Harap diisi"),
+    date: yup.string().required("Harap diisi")
 })
 
 export const CardTicketGratis = () => {
@@ -26,6 +28,7 @@ export const CardTicketGratis = () => {
     const initialValue: FormValue = {
         namatiket: '',
         jmlhtiket: '',
+        date: ''
     }
 
     const handleActive = () => {
@@ -92,9 +95,9 @@ export const CardTicketGratis = () => {
                                             <div>
                                                 <label htmlFor="" className='font-semibold text-gray-700'>Tanggal mulai<span className='text-red-700'>*</span></label>
                                                 <div className='flex flex-col pb-6'>
-                                                    <DatePickers name="date" placeholder='12/12/2024'/>
+                                                    <DatePickers name="date" placeholder='12/12/2024' />
                                                     <ErrorMessage
-                                                        name='jmlhtiket'
+                                                        name='date'
                                                         component='div'
                                                         className='text-xs text-red-700'
                                                     />
@@ -123,7 +126,7 @@ export const CardTicketGratis = () => {
                                 }}
                             >
                                 {
-                                    () => {
+                                    ({ isSubmitting, errors, dirty }) => {
                                         return (
                                             <Form>
                                                 <div className='flex flex-col pt-7'>
@@ -156,7 +159,7 @@ export const CardTicketGratis = () => {
                                                     />
 
                                                     <div className='pt-32'>
-                                                        <button onClick={handleActive} type='submit' className=' bg-blue-500 w-full hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
+                                                        <button disabled={!!errors.jmlhtiket || !!errors.namatiket || !!isSubmitting || !dirty} onClick={handleActive} type='submit' className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
                                                     </div>
                                                 </div>
                                             </Form>

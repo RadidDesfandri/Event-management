@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { FaPlus } from "react-icons/fa6";
 import ModalTicketing from '../modal/ModalTicketing';
-import { ErrorMessage, Field, Form, Formik, useField } from 'formik';
+import { ErrorMessage, Field, Form, Formik, useField, validateYupSchema } from 'formik';
 import * as yup from "yup"
 import Button from '../button';
 import { DatePickers } from './calendar';
@@ -13,12 +13,14 @@ interface FormValue {
     namatiket: string;
     jmlhtiket: string;
     harga: string;
+    date?: string;
 }
 
 const dataSchema = yup.object().shape({
     namatiket: yup.string().required('Harap diisi').max(50, "Maksimal 50 karakter"),
     jmlhtiket: yup.string().required("Harap diisi"),
-    harga: yup.string().required('Harap diisi')
+    harga: yup.string().required('Harap diisi'),
+    date: yup.string().required('Harap diisi')
 })
 
 const CardTicketBerbayar = () => {
@@ -28,7 +30,8 @@ const CardTicketBerbayar = () => {
     const initialValue: FormValue = {
         namatiket: '',
         jmlhtiket: '',
-        harga: ''
+        harga: '',
+        date: ''
     }
 
     const handleActive = () => {
@@ -97,9 +100,9 @@ const CardTicketBerbayar = () => {
                                             <div>
                                                 <label htmlFor="" className='font-semibold text-gray-700'>Tanggal mulai<span className='text-red-700'>*</span></label>
                                                 <div className='flex flex-col pb-6'>
-                                                    <DatePickers name="date" placeholder='12/12/2024'/>
+                                                    <DatePickers name="date" placeholder='12/12/2024' />
                                                     <ErrorMessage
-                                                        name='jmlhtiket'
+                                                        name='date'
                                                         component='div'
                                                         className='text-xs text-red-700'
                                                     />
@@ -127,61 +130,62 @@ const CardTicketBerbayar = () => {
 
                                 }}
                             >
-                                {
-                                    () => {
-                                        return (
-                                            <Form>
-                                                <div className='flex flex-col pt-7'>
-                                                    {/* NAMA TIKET */}
-                                                    <label htmlFor="" className='font-semibold text-gray-700'>Nama tiket <span className='text-red-700'>*</span></label>
-                                                    <Field
-                                                        type='text'
-                                                        name='namatiket'
-                                                        placeholder='Maksimal 50 karakter'
-                                                        className='w-full border-b  focus:border-blue-700 border-gray-500 outline-none h-10 pb-3'
-                                                    />
-                                                    <ErrorMessage
-                                                        name='namatiket'
-                                                        component='div'
-                                                        className='text-xs text-red-700'
-                                                    />
+                                {({ isSubmitting, errors, dirty }) => {
+                                    console.log(errors);
 
-                                                    {/* JUMLAH TIKET */}
-                                                    <label htmlFor="" className='font-semibold text-gray-700 pt-5'>Jumlah tiket</label>
-                                                    <Field
-                                                        type='text'
-                                                        name='jmlhtiket'
-                                                        placeholder='0'
-                                                        className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5'
-                                                    />
-                                                    <ErrorMessage
-                                                        name='jmlhtiket'
-                                                        component='div'
-                                                        className='text-xs text-red-700'
-                                                    />
+                                    return (
+                                        <Form >
+                                            <div className='flex flex-col pt-7'>
+                                                {/* NAMA TIKET */}
+                                                <label htmlFor="" className='font-semibold text-gray-700'>Nama tiket <span className='text-red-700'>*</span></label>
+                                                <Field
+                                                    type='text'
+                                                    name='namatiket'
+                                                    placeholder='Maksimal 50 karakter'
+                                                    className='w-full border-b  focus:border-blue-700 border-gray-500 outline-none h-10 pb-3'
+                                                />
+                                                <ErrorMessage
+                                                    name='namatiket'
+                                                    component='div'
+                                                    className='text-xs text-red-700'
+                                                />
 
-                                                    {/* HARGA */}
-                                                    <label htmlFor="" className='font-semibold text-gray-700 pt-5'>Harga tiket</label>
-                                                    <Field
-                                                        type='text'
-                                                        name='harga'
-                                                        placeholder='Rp 0'
-                                                        className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5'
-                                                    />
-                                                    <ErrorMessage
-                                                        name='harga'
-                                                        component='div'
-                                                        className='text-xs text-red-700'
-                                                    />
-                                                    <div className='pt-10'>
-                                                        <button onClick={handleActive} type='submit' className=' bg-blue-500 w-full hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
-                                                    </div>
+                                                {/* JUMLAH TIKET */}
+                                                <label htmlFor="" className='font-semibold text-gray-700 pt-5'>Jumlah tiket</label>
+                                                <Field
+                                                    type='text'
+                                                    name='jmlhtiket'
+                                                    placeholder='0'
+                                                    className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5'
+                                                />
+                                                <ErrorMessage
+                                                    name='jmlhtiket'
+                                                    component='div'
+                                                    className='text-xs text-red-700'
+                                                />
+
+                                                {/* HARGA */}
+                                                <label htmlFor="" className='font-semibold text-gray-700 pt-5'>Harga tiket</label>
+                                                <Field
+                                                    type='text'
+                                                    name='harga'
+                                                    placeholder='Rp 0'
+                                                    className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5'
+                                                />
+                                                <ErrorMessage
+                                                    name='harga'
+                                                    component='div'
+                                                    className='text-xs text-red-700'
+                                                />
+                                                <div className='pt-10'>
+                                                    <button disabled={!!errors.harga || !!errors.jmlhtiket || !!errors.namatiket || isSubmitting || !dirty} onClick={handleActive} type='submit' className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
                                                 </div>
-                                            </Form>
-                                        )
-                                    }
-                                }
+                                            </div>
+                                        </Form>
+                                    )
+                                }}
                             </Formik>
+
                         }
                     </div>
                 </ModalTicketing>
