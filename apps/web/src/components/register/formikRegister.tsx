@@ -24,7 +24,7 @@ interface MyFormValue {
     password: string
 }
 
-export default function FormikRegisterUser() {
+export default function FormikRegisterEO() {
     const [show, setShow] = useState<boolean>(false)
 
     const initialValues: MyFormValue = {
@@ -49,7 +49,7 @@ export default function FormikRegisterUser() {
                     <Form>
                         <div className='flex flex-col gap-4'>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3' type="text" name="namaDepan"
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="namaDepan"
                                     placeholder='nama depan'
                                 />
                                 <ErrorMessage
@@ -59,7 +59,7 @@ export default function FormikRegisterUser() {
                                 />
                             </div>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3' type="text" name="namaBelakang"
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="namaBelakang"
                                     placeholder='nama belakang ' />
                                 <ErrorMessage
                                     name='namaBelakang'
@@ -68,7 +68,7 @@ export default function FormikRegisterUser() {
                                 />
                             </div>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3' type="email" name="email"
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="email" name="email"
                                     placeholder='email  (tricket@sampel.com)'
                                 />
                                 <ErrorMessage
@@ -78,7 +78,7 @@ export default function FormikRegisterUser() {
                                 />
                             </div>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3' type=" number " name="nomorTelfon"
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type=" number " name="nomorTelfon"
                                     placeholder='nomor ponsel' />
                                 <ErrorMessage
                                     name='nomorTelfon'
@@ -87,16 +87,16 @@ export default function FormikRegisterUser() {
                                 />
                             </div>
                             <div className='relative'>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 ' type={show ? 'text' : 'password'} name="password"
+                                <Field className='h-12 rounded-md w-80 bg-white font-medium border-2 border-gray-200 px-3 ' type={show ? 'text' : 'password'} name="password"
                                     placeholder='password' />
                                 <ErrorMessage
                                     name='password'
                                     component='div'
                                     className='text-red-600 text-sm'
                                 />
-                                <span className='absolute top-5 right-3' onClick={() => setShow(!show)}>{show ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
+                                <span className='absolute top-4 right-3' onClick={() => setShow(!show)}>{show ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
                             </div>
-                            <button className='h-12 w-80 rounded-xl bg-blue-700 text-white font-medium' type='submit'>Daftar</button>
+                            <button className='h-12 w-80 rounded-xl bg-blue-700 text-white font-semibold' type='submit'>Daftar</button>
                         </div>
                     </Form>
                 )
