@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import LogoLg from "@/components/logoLg";
-import FormikLoginUser from "../../../components/formikLoginUser";
+import FormikLoginUser from "../../../components/login/formikLoginUser";
 
 export default function page() {
     return (
