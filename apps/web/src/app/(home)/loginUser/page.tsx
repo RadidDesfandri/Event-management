@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import LogoLg from "@/components/logoLg";
-import FormikLoginUser from "../../../components/login/formikLoginUser";
+import FormikLoginEO from "@/components/login/formikLogin";
 
 export default function page() {
     return (
@@ -25,7 +25,7 @@ export default function page() {
                     <p className="pb-3">tidak mempunyai akun? <Link href={'/registerUser'} className="text-blue-800 font-bold">Daftar</Link></p>
                     <div className="flex flex-col w-96 p-8 rounded-2xl shadow-xl items-center bg-gray-50">
                         <p className="pb-3 pl-9 text-gray-600 mr-80">email</p>
-                        <FormikLoginUser />
+                        <FormikLoginEO />
                     </div>
                 </div>
             </div>
