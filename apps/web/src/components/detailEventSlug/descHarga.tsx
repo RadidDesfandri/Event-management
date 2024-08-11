@@ -8,13 +8,24 @@ import Link from 'next/link'
 import { FaFacebookF } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoMdShare } from "react-icons/io";
+import ModalTicketing from '../modal/ModalTicketing'
 
 export const DescHarga = () => {
     const [isActive, setIsActive] = useState(false)
+    const [isOpenModal, setIsOpenModal] = useState(false)
+
+    const openModal = () => {
+        setIsOpenModal(true)
+    }
+
+    const closeModal = () => {
+        setIsOpenModal(false)
+    }
 
     const handleActive = () => {
         setIsActive(!isActive)
     }
+
 
     return (
         <section className='pt-10 flex justify-between'>
@@ -31,15 +42,20 @@ export const DescHarga = () => {
 
                 {isActive ?
                     <div className=' w-full flex flex-col gap-6 my-10 px-5 lg:px-0'>
-                        <Link href={'/buytiket'} className='text-white'>
-                            <Button props='Beli  Tiket' />
-                        </Link>
+                        <div className='flex justify-end'>
+                            <button onClick={openModal} className=' bg-blue-500 text-gray-100 hover:bg-blue-600 transition-all duration-150 py-3 px-8 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Beli Tiket</button>
+                            <ModalTicketing isOpen={isOpenModal} onClose={closeModal}>
+                                <div>
+                                    
+                                </div>
+                            </ModalTicketing>
+                        </div>
                         <BuyTiket />
                     </div>
 
                     :
 
-                    <div className='w-full my-10 px-5 md:px-0'>
+                    <div className='w-full my-10 px-5 lg:px-0'>
                         <DeskripsiDetailEvent />
                     </div>
                 }
@@ -61,7 +77,7 @@ export const DescHarga = () => {
                         </div>
                     </Link>
 
-                    <Link href={''}>
+                    <Link href={'#'}>
                         <div className='border border-black p-2 rounded-full'>
                             <IoMdShare className='w-5 h-5' />
                         </div>
