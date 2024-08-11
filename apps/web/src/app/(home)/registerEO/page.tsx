@@ -1,6 +1,6 @@
 "use client"
-import FormikRegisterEO from "@/components/formikRegisterEO";
 import LogoLg from "@/components/logoLg";
+import FormikRegisterEO from "@/components/register/formikRegisterEO";
 import Image from "next/image";
 import Link from "next/link";
 
