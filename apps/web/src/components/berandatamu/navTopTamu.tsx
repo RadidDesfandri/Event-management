@@ -34,6 +34,11 @@ export default function NavTopTamu() {
 
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [isMenu, setMenu] = useState(false)
+    const [isDaftarToggle, setDaftarToggle] = useState(false)
+
+    const handleToggle = () => {
+        setDaftarToggle(!isDaftarToggle)
+    }
 
     const openMenu = () => {
         setMenu(true)
@@ -105,10 +110,10 @@ export default function NavTopTamu() {
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </ModalSearch>
                                     </div>
                                     {/* Search mobile end */}
+
                                 </Form>
                             </Formik>
 
@@ -128,26 +133,37 @@ export default function NavTopTamu() {
                                         <p className='text-gray-700'>Untuk menggunakan semua fitur di tricket.</p>
                                     </div>
                                     <div className='flex gap-5 pt-3 border-b border-gray-500 pb-10'>
-                                        <button className='w-1/2 bg-transparent border-2 font-semibold border-blue-700 text-blue-700 py-3 rounded-md'>Daftar</button>
+                                        <button onClick={handleToggle} className='w-1/2 bg-transparent border-2 font-semibold border-blue-700 text-blue-700 py-3 rounded-md'>Daftar</button>
                                         <button className='w-1/2 bg-blue-700 font-semibold text-white py-3 rounded-md'>Masuk</button>
                                     </div>
+
+                                    {isDaftarToggle &&
+                                        <div className='fixed h-screen bg-white/50 inset-0 z-50'>
+                                            <div className=' w-full h-screen px-4 flex justify-center items-center'>
+                                                <main className=' rounded-lg w-[300px] bg-white shadow-md '>
+                                                    <IoMdClose onClick={handleToggle} className='w-6 h-6 ml-3 mt-3' />
+                                                    <h1 className='text-black text-center font-semibold'>Mau daftar sebagai apanih?</h1>
+                                                    <div className='flex items-center justify-center text-center gap-4 px-5 my-5'>
+                                                        <Link href={'/registerEO'} className='w-1/2 bg-blue-700 font-semibold text-white py-3 rounded-md'>Pembuat</Link>
+                                                        <Link href={'/registerUser'} className='w-1/2 bg-transparent border-2 font-semibold border-blue-700 text-blue-700 py-3 rounded-md'>Pengunjung</Link>
+                                                    </div>
+                                                </main>
+                                            </div>
+                                        </div>
+                                    }
+
                                     <div className='pt-14'>
                                         {data.map((item, key) => {
                                             return (
                                                 <div key={key} className='flex items-center mb-6 gap-4 text-xl font-semibold text-gray-900'>
-                                                    < item.icons className='w-8 h-8 text-gray-600'/>
+                                                    < item.icons className='w-8 h-8 text-gray-600' />
                                                     <p>{item.text}</p>
                                                 </div>
                                             )
                                         })}
                                     </div>
                                 </div>
-
                             </ModalHumber>
-                            <div>
-
-                            </div>
-
                             {/* Menu humberger end */}
 
                         </div>

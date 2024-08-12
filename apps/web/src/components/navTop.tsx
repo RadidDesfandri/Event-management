@@ -105,7 +105,6 @@ export default function NavTop() {
                         <Image onClick={openModal} src={'/pameran1.jpg'} alt='Profile' width={100} height={100} className='w-10 h-10 rounded-full object-cover cursor-pointer' />
                     </div>
 
-
                     <ModalProfile isOpen={isModalOpen} onClose={closeModal}>
                         <div className=' flex flex-col'>
                             <div className='flex gap-2 items-center border-b pb-3'>
@@ -122,6 +121,7 @@ export default function NavTop() {
                             </div>
                         </div>
                     </ModalProfile>
+
 
 
                 </div>
