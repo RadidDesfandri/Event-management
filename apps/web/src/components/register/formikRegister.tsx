@@ -6,13 +6,11 @@ import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from 'react';
 
-const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
 const validationSchema = yup.object().shape({
     namaDepan: yup.string().required("mohon masukan nama depan anda"),
     namaBelakang: yup.string().required("mohon masukan nama belakang anda"),
     email: yup.string().required("mohon masukan email anda").email("email tidak valid"),
-    nomorTelfon: yup.string().matches(phoneRegExp, 'nomor ponsel tidak sesuai').required('mohon masukan nomor ponsel anda'),
+    nomorTelfon: yup.number().required('mohon masukan nomor ponsel anda'),
     password: yup.string().required("mohon masukan password anda").min(8, "minimal 8 karakter")
 })
 
@@ -78,7 +76,7 @@ export default function FormikRegisterEO() {
                                 />
                             </div>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type=" number " name="nomorTelfon"
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' type="number" name="nomorTelfon"
                                     placeholder='nomor ponsel' />
                                 <ErrorMessage
                                     name='nomorTelfon'
