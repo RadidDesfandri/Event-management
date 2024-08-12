@@ -3,6 +3,7 @@ import React from 'react'
 import LogoLg from '../logoLg'
 import Link from 'next/link'
 import FormikRegisterEO from './formikRegister'
+import Button from '../button'
 
 export default function DesainRegisterEO({link} : {link : string}) {
     return (
@@ -21,7 +22,7 @@ export default function DesainRegisterEO({link} : {link : string}) {
                     </section>
 
                     <section className='flex flex-col items-center'>
-                        {/* Text akuna tricket lapotp start */}
+                        {/* Text akun tricket laptop start */}
                         <div className='lg:block hidden text-sm text-gray-700 text-center'>
                             <p className="font-bold text-lg text-gray-950">Buat akun Tricket kamu</p>
                             <p>sudah punya akun? <Link href={`${link}`} className="text-blue-800 font-bold">Masuk</Link></p>
@@ -30,18 +31,16 @@ export default function DesainRegisterEO({link} : {link : string}) {
 
                         {/* Text akun tricket mobile start */}
                         <div className='bg-white w-[350px] flex flex-col items-center mt-10 lg:mt-6 justify-center py-6 shadow-sm rounded-md shadow-gray-500'>
-                            <div className='block lg:hidden text-sm text-gray-700 text-center'>
+                            <main className='block lg:hidden text-sm text-gray-700 text-center pb-2'>
                                 <p className="font-bold text-lg text-gray-950">Buat akun Tricket kamu</p>
                                 <p>sudah punya akun? <Link href={`${link}`} className="text-blue-800 font-bold">Masuk</Link></p>
-                            </div>
+                            </main>
                             <FormikRegisterEO />
                         </div>
                         {/* Text akun tricket mobile end */}
-
                     </section>
                 </main>
             </div>
-
         </section>
     )
 }

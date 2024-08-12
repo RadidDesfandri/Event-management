@@ -40,7 +40,8 @@ export default function FormikLoginEO() {
                     <Form>
                         <div className='flex flex-col content-center gap-4'>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3' type="email" name="email" />
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="email" name="email" 
+                                placeholder="email (tricket@sampel.com)"/>
                                 <ErrorMessage
                                     name='email'
                                     component='div'
@@ -48,7 +49,8 @@ export default function FormikLoginEO() {
                                 />
                             </div>
                             <div className='relative'>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 ' type={show? 'text':'password'} name="password" />
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type={show? 'text':'password'} name="password"
+                                placeholder="password" />
                                 <ErrorMessage
                                     name='password'
                                     component='div'
@@ -56,7 +58,7 @@ export default function FormikLoginEO() {
                                 />
                                 <span className='absolute top-5 right-3' onClick={() => setShow(!show)}>{show ? <AiFillEye/> : <AiFillEyeInvisible/> }</span>
                             </div>
-                            <button className='h-12 w-80 rounded-xl bg-blue-700 text-white font-medium' type='submit'>Masuk</button>
+                            <button className='h-12 w-80 rounded-xl bg-blue-700 text-white font-semibold' type='submit'>Masuk</button>
                         </div>
                     </Form>
                 )
