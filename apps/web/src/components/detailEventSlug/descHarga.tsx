@@ -26,7 +26,6 @@ export const DescHarga = () => {
         setIsActive(!isActive)
     }
 
-
     return (
         <section className='pt-10 flex justify-between'>
 
@@ -59,9 +58,7 @@ export const DescHarga = () => {
                         </div>
                         <BuyTiket />
                     </div>
-
                     :
-
                     <div className='w-full my-10 px-5 lg:px-0'>
                         <DeskripsiDetailEvent />
                     </div>

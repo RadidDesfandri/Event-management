@@ -1,22 +1,19 @@
 "use client"
 
-import React, { useState } from 'react'
-import { IoIosArrowRoundBack, IoIosSearch } from "react-icons/io";
+import { IoIosArrowRoundBack, IoIosInformationCircle, IoIosSearch, IoMdClose } from "react-icons/io";
 import Logo from '../logo';
 import Link from 'next/link';
 import Button from '../button';
 import { Navbar } from '@nextui-org/navbar';
 import { Field, Form, Formik } from 'formik';
-import ModalSearch from '../modal/modalSearch';
-import { IoMenu } from 'react-icons/io5';
-import { IoMdClose } from "react-icons/io";
-import { ModalHumber } from '../modal/ModalHumber';
-import { FaBlogger } from 'react-icons/fa6';
-import { MdOutlineContactSupport } from 'react-icons/md';
+import ModalSearch from "../modal/modalSearch";
+import { IoMenu } from "react-icons/io5";
+import { ModalHumber } from "../modal/ModalHumber";
+import { MdOutlineContactSupport } from "react-icons/md";
 import { SiGooglemessages } from "react-icons/si";
+import { FaBlogger } from "react-icons/fa6";
 import { GrMoney } from "react-icons/gr";
-import { IoIosInformationCircle } from "react-icons/io";
-
+import { useState } from "react";
 
 interface SearchForm {
     search: string
@@ -61,7 +58,7 @@ export default function NavTopTamu() {
     }
     return (
 
-        <Navbar shouldHideOnScroll className='z-20'>
+        <Navbar shouldHideOnScroll className='z-20 hidden lg:block'>
             <section className='w-full sticky top-0 backdrop-blur-lg bg-transparent'>
                 <div className='max-w-7xl h-16 mx-auto md:px-10 px-5 flex items-center justify-between'>
                     <div className='flex w-full md:w-[640px] lg:w-[898px] justify-between lg:justify-between items-center'>
@@ -168,7 +165,6 @@ export default function NavTopTamu() {
 
                         </div>
                     </div>
-
 
                     {/* Button login dan register start */}
                     <div className='gap-3 hidden md:flex text-gray-100'>
