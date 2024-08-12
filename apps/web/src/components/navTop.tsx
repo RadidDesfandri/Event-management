@@ -4,13 +4,15 @@ import { Navbar } from '@nextui-org/navbar'
 import Link from 'next/link'
 import React, { useState } from 'react'
 import Logo from './logo'
-import { IoIosSearch } from 'react-icons/io'
+import { IoIosSearch, IoMdListBox } from 'react-icons/io'
 import { IoLogOut, IoMenu } from 'react-icons/io5'
 import Image from 'next/image'
 import ModalProfile from './modal/ModalProfile'
 import ModalSearch from './modal/modalSearch'
 import { Field, Form, Formik } from 'formik'
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { FaMoneyCheckAlt, FaUserAlt } from "react-icons/fa";
+import { MdVerifiedUser } from "react-icons/md";
 
 
 interface SearchForm {
@@ -20,6 +22,21 @@ interface SearchForm {
 export default function NavTop() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
+    const [isMenu, setIsMenu] = useState(false)
+    const [logOut, setLogOut] = useState(false)
+    const [logOutDesk, setLogOutDesk] = useState(false)
+
+    const handleLogOutDesk = () => {
+        setLogOutDesk(!logOutDesk)
+    }
+
+    const handleLogOut = () => {
+        setLogOut(!logOut)
+    }
+
+    const handleMenu = () => {
+        setIsMenu(!isMenu)
+    }
 
     const searchOpen = () => {
         setIsSearchOpen(true)
@@ -96,7 +113,59 @@ export default function NavTop() {
                                 </Form>
                             </Formik>
 
-                            <IoMenu className='w-8 h-8 text-white md:hidden block' />
+                            <IoMenu onClick={handleMenu} className='w-8 h-8 text-white md:hidden block' />
+
+                            {isMenu &&
+                                <div className='fixed w-full inset-0 z-50 h-screen bg-blue-950'>
+                                    <IoIosArrowRoundBack onClick={handleMenu} className='w-12 h-12 ml-5 mt-5 text-white' />
+                                    <div className='bg-white h-full mt-24 relative'>
+
+                                        <div className='p-5 bg-gray-900 w-20 h-20 flex rounded-full absolute top-[-40px] left-6'>
+                                            <FaUserAlt className='w-10 h-10 text-white text-center' />
+                                        </div>
+                                        <div className='px-5 pt-14 border-b-2 pb-5'>
+                                            <p className='text-lg font-bold mt-3 text-gray-700'>Dashboard</p>
+                                            <p className='text-lg font-bold text-gray-700'>Event saya</p>
+                                        </div>
+
+                                        <div className='px-5 pt-8 flex flex-col gap-3'>
+                                            <div className='flex gap-4 items-center text-gray-700'>
+                                                <MdVerifiedUser className='w-6 h-6 ' />
+                                                <p className='font-semibold text-lg'>Informasi dasar</p>
+                                            </div>
+                                            <div className='flex gap-4 items-center text-gray-700'>
+                                                <IoMdListBox className='w-6 h-6 ' />
+                                                <p className='font-semibold text-lg'>Informasi legal</p>
+                                            </div>
+                                            <div className='flex gap-4 items-center text-gray-700'>
+                                                <FaMoneyCheckAlt className='w-6 h-6 ' />
+                                                <p className='font-semibold text-lg'>Rekening</p>
+                                            </div>
+                                        </div>
+
+                                        <div onClick={handleLogOut} className='px-5 mt-40 cursor-pointer flex justify-between font-bold text-lg'>
+                                            <p className='text-red-700'>Keluar</p>
+                                            <IoLogOut className='w-9 h-9 text-red-700' />
+                                        </div>
+
+                                        {logOut &&
+                                            <div onClick={handleLogOut} className='fixed h-screen flex items-center justify-center inset-0 z-50 bg-white/20'>
+
+                                                <div onClick={e => e.stopPropagation()} className='bg-gray-100 shadow-lg p-5 rounded-md'>
+                                                    <h1 className='text-black font-semibold'>Apakah anda yakin ingin keluar?</h1>
+                                                    <div className='w-full flex justify-end'>
+                                                        <div className='flex gap-3 mt-4 cursor-pointer'>
+                                                            <p onClick={handleLogOut} className='p-1 w-20 text-center border rounded-md border-blue-600 font-bold text-blue-600'>TIDAK</p>
+                                                            <p className='p-1 w-20 text-center bg-blue-600 border rounded-md hover:bg-red-600 hover:border-red-600 transition-all duration-200 border-blue-600 font-bold text-white'>YA</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
 
@@ -116,14 +185,25 @@ export default function NavTop() {
                                 <Link href={'/dashboard'}><p className='py-2 px-2 font-semibold text-gray-700 hover:bg-gray-200 rounded-md transition-all duration-100'>Dashboard</p></Link>
                                 <Link href={'#'}><p className=' py-2 px-2 font-semibold text-gray-700 hover:bg-gray-200 rounded-md transition-all duration-100'>Event Saya</p></Link>
                             </div>
-                            <div className='mt-3 flex items-center justify-between hover:bg-gray-200 rounded-md transition-all duration-100'>
-                                <p className='py-2 px-2 font-semibold text-red-700 '>Keluar</p>
+                            <div className='mt-3 cursor-pointer flex items-center justify-between hover:bg-gray-200 rounded-md transition-all duration-100'>
+                                <p onClick={handleLogOutDesk} className='py-2 px-2 font-semibold text-red-700 '>Keluar</p>
                                 <IoLogOut className='w-5 h-5' />
                             </div>
                         </div>
+                        {logOutDesk &&
+                            <div onClick={handleLogOutDesk} className='fixed h-screen flex items-center justify-center inset-0 z-50 bg-white/20'>
+                                <div onClick={e => e.stopPropagation()} className='bg-gray-100 shadow-lg p-5 rounded-md'>
+                                    <h1 className='text-black font-semibold'>Apakah anda yakin ingin keluar?</h1>
+                                    <div className='w-full flex justify-end'>
+                                        <div className='flex gap-3 mt-4 cursor-pointer'>
+                                            <p onClick={handleLogOutDesk} className='p-1 w-20 text-center border rounded-md border-blue-600 font-bold text-blue-600'>TIDAK</p>
+                                            <p className='p-1 w-20 text-center bg-blue-600 border rounded-md hover:bg-red-600 hover:border-red-600 transition-all duration-200 border-blue-600 font-bold text-white'>YA</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </ModalProfile>
-
-
                 </div>
             </section>
         </Navbar>
