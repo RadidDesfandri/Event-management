@@ -34,6 +34,26 @@ export default function NavTopTamu() {
 
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [isMenu, setMenu] = useState(false)
+    const [isToggle, setIsToggle] = useState(false)
+    const [isToggleMasuk, setIsToggleMasuk] = useState(false)
+    const [isDaftar, setIsdatfar] = useState(false)
+    const [isMasuk, setIsMasuk] = useState(false)
+
+    const handleMasuk = () => {
+        setIsMasuk(!isMasuk)
+    }
+
+    const handleDaftar = () => {
+        setIsdatfar(!isDaftar)
+    }
+
+    const handleToggleMasuk = () => {
+        setIsToggleMasuk(!isToggleMasuk)
+    }
+
+    const handleToggle = () => {
+        setIsToggle(!isToggle)
+    }
 
     const openMenu = () => {
         setMenu(true)
@@ -115,6 +135,7 @@ export default function NavTopTamu() {
                             {/* Menu humberger start */}
                             <IoMenu onClick={openMenu} className='w-8 h-8 text-white md:hidden block' />
                             <ModalHumber isOpen={isMenu} onClose={closeMenu}>
+
                                 {/* Nav start */}
                                 <div className='bg-blue-950 h-16 w-full flex items-center justify-between px-5'>
                                     <Logo />
@@ -127,15 +148,58 @@ export default function NavTopTamu() {
                                         <h1 className='text-2xl font-semibold text-black'>Masuk ke Akunmu</h1>
                                         <p className='text-gray-700'>Untuk menggunakan semua fitur di tricket.</p>
                                     </div>
+
                                     <div className='flex gap-5 pt-3 border-b border-gray-500 pb-10'>
-                                        <button className='w-1/2 bg-transparent border-2 font-semibold border-blue-700 text-blue-700 py-3 rounded-md'>Daftar</button>
-                                        <button className='w-1/2 bg-blue-700 font-semibold text-white py-3 rounded-md'>Masuk</button>
+                                        <button onClick={handleToggle} className='w-1/2 bg-transparent border-2 font-semibold border-blue-700 text-blue-700 py-3 rounded-md'>Daftar</button>
+                                        <button onClick={handleToggleMasuk} className='w-1/2 bg-blue-700 font-semibold text-white py-3 rounded-md'>Masuk</button>
                                     </div>
+
+                                    {isToggle &&
+                                        <div className='fixed h-screen w-full inset-0 z-50 bg-white/30'>
+                                            <div className='flex justify-center items-center h-screen'>
+                                                <div className='bg-gray-100 shadow-lg p-4 rounded-md w-[350px]'>
+                                                    <IoMdClose onClick={handleToggle} className='w-7 h-7 hover:text-red-700 cursor-pointer' />
+                                                    <h1 className='text-center mt-4 text-gray-800 font-semibold'>Mau daftar sebagai apa nih?</h1>
+                                                    <div className='flex gap-4 my-3 '>
+
+                                                        <Link href={'/registerEO'} className='w-1/2 text-center bg-blue-700 font-semibold text-white rounded-md py-3'>Pembuat</Link>
+
+                                                        <Link href={'/registerUser'} className='w-1/2 bg-transparent border-2 font-semibold text-center border-blue-700 text-blue-700 rounded-md py-3'>Pengunjung</Link>
+
+                                                    </div>
+                                                    <p className='text-[11px] text-gray-600'>Fitur yang didapatkan oleh akun pembuat dan pengunjung akan berbeda!</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    {isToggleMasuk &&
+                                        <div className='fixed h-screen w-full inset-0 z-50 bg-white/30'>
+                                            <div className='flex justify-center items-center h-screen'>
+                                                <div className='bg-gray-100 shadow-lg p-4 rounded-md w-[350px]'>
+                                                    <IoMdClose onClick={handleToggleMasuk} className='w-7 h-7 hover:text-red-700 cursor-pointer' />
+                                                    <h1 className='text-center mt-4 text-gray-800 font-semibold'>Mau masuk sebagai apa nih?</h1>
+                                                    <div className='flex gap-4 my-3 '>
+
+                                                        <Link href={'/loginEO'} className='w-1/2 text-center bg-blue-700 font-semibold text-white rounded-md py-3'>Pembuat</Link>
+
+                                                        <Link href={'/loginUser'} className='w-1/2 bg-transparent border-2 font-semibold text-center border-blue-700 text-blue-700 rounded-md py-3'>Pengunjung</Link>
+
+                                                    </div>
+                                                    <p className='text-[11px] text-gray-600'>Fitur yang didapatkan oleh akun pembuat dan pengunjung akan berbeda!</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+
                                     <div className='pt-14'>
                                         {data.map((item, key) => {
                                             return (
                                                 <div key={key} className='flex items-center mb-6 gap-4 text-xl font-semibold text-gray-900'>
-                                                    < item.icons className='w-8 h-8 text-gray-600'/>
+                                                    < item.icons className='w-8 h-8 text-gray-600' />
                                                     <p>{item.text}</p>
                                                 </div>
                                             )
@@ -143,11 +207,8 @@ export default function NavTopTamu() {
                                     </div>
                                 </div>
 
+
                             </ModalHumber>
-                            <div>
-
-                            </div>
-
                             {/* Menu humberger end */}
 
                         </div>
@@ -156,13 +217,59 @@ export default function NavTopTamu() {
 
                     {/* Button login dan register start */}
                     <div className='gap-3 hidden md:flex text-gray-100'>
-                        <Button props='Daftar' />
-                        <Button props='Masuk' />
+                        <div onClick={handleDaftar}>
+                            <Button props='Daftar' />
+                        </div>
+                        <div onClick={handleMasuk}>
+                            <Button props='Masuk' />
+                        </div>
                     </div>
                     {/* Button login dan register end */}
+
+                    {isDaftar &&
+                        <div className='fixed h-screen w-full inset-0 z-50 bg-white/30'>
+                            <div className='flex justify-center items-center h-screen'>
+                                <div className='bg-gray-100 shadow-lg p-4 rounded-md w-[350px]'>
+                                    <IoMdClose onClick={handleDaftar} className='w-7 h-7 hover:text-red-700 cursor-pointer' />
+                                    <h1 className='text-center mt-4 text-gray-800 font-semibold'>Mau daftar sebagai apa nih?</h1>
+                                    <div className='flex gap-4 my-3 '>
+
+                                        <Link href={'/registerEO'} className='w-1/2 text-center bg-blue-700 font-semibold text-white rounded-md py-3'>Pembuat</Link>
+
+                                        <Link href={'/registerUser'} className='w-1/2 bg-transparent border-2 font-semibold text-center border-blue-700 text-blue-700 rounded-md py-3'>Pengunjung</Link>
+
+                                    </div>
+                                    <p className='text-[11px] text-gray-600'>Fitur yang didapatkan oleh akun pembuat dan pengunjung akan berbeda!</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    {isMasuk &&
+                        <div className='fixed h-screen w-full inset-0 z-50 bg-white/30'>
+                            <div className='flex justify-center items-center h-screen'>
+                                <div className='bg-gray-100 shadow-lg p-4 rounded-md w-[350px]'>
+                                    <IoMdClose onClick={handleMasuk} className='w-7 h-7 hover:text-red-700 cursor-pointer' />
+                                    <h1 className='text-center mt-4 text-gray-800 font-semibold'>Mau masuk sebagai apa nih?</h1>
+                                    <div className='flex gap-4 my-3 '>
+
+                                        <Link href={'/loginEO'} className='w-1/2 text-center bg-blue-700 font-semibold text-white rounded-md py-3'>Pembuat</Link>
+
+                                        <Link href={'/loginUser'} className='w-1/2 bg-transparent border-2 font-semibold text-center border-blue-700 text-blue-700 rounded-md py-3'>Pengunjung</Link>
+
+                                    </div>
+                                    <p className='text-[11px] text-gray-600'>Fitur yang didapatkan oleh akun pembuat dan pengunjung akan berbeda!</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
 
                 </div>
             </section>
         </Navbar>
     )
 }
+

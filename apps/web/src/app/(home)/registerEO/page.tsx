@@ -3,7 +3,7 @@ import DesainRegisterEO from "@/components/register/desainRegister";
 export default function page() {
     return (
         <div>
-            <DesainRegisterEO link='/logineo'/>
+            <DesainRegisterEO link='/loginEO'/>
         </div>
     )
 }

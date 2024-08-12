@@ -3,7 +3,7 @@ import DesainLogin from "@/components/login/desainLogin";
 export default function page() {
     return (
        <div>
-        <DesainLogin link="registereo"/>
+        <DesainLogin link="registerEO"/>
        </div>
     )
 }
