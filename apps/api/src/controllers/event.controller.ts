@@ -16,4 +16,20 @@ export class EventController {
             })
         }
     }
+
+    async createEvent(req: Request, res: Response) {
+        try {
+            // await prisma.events.create({
+            //     data: {
+            //         description: req.body.description,
+            //         eo_Id: req.user?.id
+            //     }
+            // })
+        } catch (err) {
+            res.status(400).send({
+                status: 'error',
+                msg: err
+            })
+        }
+    }
 }
