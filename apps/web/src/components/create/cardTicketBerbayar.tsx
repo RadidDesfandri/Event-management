@@ -7,30 +7,27 @@ import { ErrorMessage, Field, Form, Formik, useField, validateYupSchema } from '
 import * as yup from "yup"
 import Button from '../button';
 import { DatePickers } from './calendar';
+import { TicketProps } from './ticketing';
+import { ITicket } from '../types/event';
 
-
-interface FormValue {
-    namatiket: string;
-    jmlhtiket: string;
-    harga: string;
-    date?: string;
-}
 
 const dataSchema = yup.object().shape({
-    namatiket: yup.string().required('Harap diisi').max(50, "Maksimal 50 karakter"),
-    jmlhtiket: yup.string().required("Harap diisi"),
-    harga: yup.string().required('Harap diisi'),
+    ticketName: yup.string().required('Harap diisi').max(50, "Maksimal 50 karakter"),
+    quota: yup.number().required("Harap diisi"),
+    price: yup.number().required('Harap diisi'),
     date: yup.string().required('Harap diisi')
 })
 
-const CardTicketBerbayar = () => {
+
+const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
+
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [isActive, setIsActive] = useState(false)
 
-    const initialValue: FormValue = {
-        namatiket: '',
-        jmlhtiket: '',
-        harga: '',
+    const initialValue: ITicket = {
+        ticketName: '',
+        quota: '',
+        price: '',
         date: ''
     }
 
@@ -54,7 +51,7 @@ const CardTicketBerbayar = () => {
                 {/* Tiket start */}
                 <div onClick={openModal} className={`flex bg-white hover:bg-blue-400 shadow-sm border border-gray-200 rounded-lg`}>
                     <div className='w-[70px] h-[90px] relative border-dashed border-black border-r-2'>
-                        <Image src={'https://assets.loket.com/images/icon/icon-barcode.svg'} alt='barcode' width={8} height={8} className=' absolute top-[20%] left-[40%]' />
+                        <Image src='https://assets.loket.com/images/icon/icon-barcode.svg' alt='barcode' width={8} height={8} className=' absolute top-[20%] left-[40%]' />
                         <div className='absolute top-[-20px] border-b-2 border-gray-200 right-[-18px] bg-gray-100 rounded-full w-8 h-8'></div>
                         <div className='absolute bottom-[-20px] border-t-2 border-gray-200 right-[-18px] bg-gray-100 rounded-full w-8 h-8'></div>
                         <div className='absolute left-[-25px] border-r-2 border-gray-200 bg-gray-100 w-9 h-8 rounded-full top-[30%]'></div>
@@ -75,77 +72,68 @@ const CardTicketBerbayar = () => {
                 <ModalTicketing isOpen={isOpenModal} onClose={closeModal}>
                     <div className='pt-4'>
                         <div className='flex'>
+
                             <div className='w-1/2 relative'>
                                 <h1 className={`text-center ${isActive ? 'text-gray-400' : 'text-black'} py-3 border-b border-gray-300 font-semibold`}>DETAIL TIKET</h1>
                                 <span className={` ${isActive ? 'h-0' : 'h-1'} bg-blue-400 absolute w-full rounded-t-lg  bottom-0`}></span>
                             </div>
+
                             <div className='w-1/2 relative'>
                                 <h1 className={`text-center ${isActive ? 'text-black' : 'text-gray-400'} py-3 border-b border-gray-300 font-semibold`}>TANGGAL EVENT</h1>
                                 <span className={` ${isActive ? 'h-1' : 'h-0'} bg-blue-400 absolute w-full rounded-t-lg  bottom-0`}></span>
                             </div>
                         </div>
 
-                        {isActive ?
-                            <Formik
-                                initialValues={{ date: new Date() }}
-                                validationSchema={dataSchema}
-                                onSubmit={(values, action) => {
-                                    alert(JSON.stringify(values));
-                                    action.resetForm()
-                                }}
-                            >
-                                {(props) => (
-                                    <Form>
-                                        <div className='pt-7 flex flex-col gap-44'>
-                                            <div>
-                                                <label htmlFor="" className='font-semibold text-gray-700'>Tanggal mulai<span className='text-red-700'>*</span></label>
-                                                <div className='flex flex-col pb-6'>
-                                                    <DatePickers name="date" placeholder='12/12/2024' />
-                                                    <ErrorMessage
-                                                        name='date'
-                                                        component='div'
-                                                        className='text-xs text-red-700'
-                                                    />
 
+                        <Formik
+                            initialValues={initialValue}
+                            validationSchema={dataSchema}
+                            onSubmit={(values, action) => {
+                                alert(JSON.stringify(values));
+                                setTicket([...ticket, values])
+                                action.resetForm()
+
+                            }}
+                        >
+                            {({ isSubmitting, errors, dirty }) => {
+                                // console.log(errors);
+                                return (
+                                    <Form >
+
+                                        {isActive ?
+                                            <div className='pt-7 flex flex-col gap-44'>
+                                                <div>
+                                                    <label htmlFor="" className='font-semibold text-gray-700'>Tanggal mulai<span className='text-red-700'>*</span></label>
+                                                    <div className='flex flex-col pb-6'>
+                                                        <DatePickers name="date" placeholder='12/12/2024' />
+                                                        <ErrorMessage
+                                                            name='date'
+                                                            component='div'
+                                                            className='text-xs text-red-700'
+                                                        />
+
+                                                    </div>
+                                                    <h1 className='text-[10px] text-gray-700'>Tanggal maksimal penjualan bergantung pada tanggal berakhirnya event.</h1>
                                                 </div>
-                                                <h1 className='text-[10px] text-gray-700'>Tanggal maksimal penjualan bergantung pada tanggal berakhirnya event.</h1>
-                                            </div>
-                                            <div className='flex gap-2'>
-                                                <div onClick={handleActive}>
-                                                    <Button props='<' />
+                                                <div className='flex gap-2'>
+                                                    <div onClick={handleActive}>
+                                                        <Button props='<' />
+                                                    </div>
+                                                    <button type='submit' className='w-full bg-blue-500 hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50 '>Buat Tiket</button>
                                                 </div>
-                                                <button type='submit' className='w-full bg-blue-500 hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50 '>Buat Tiket</button>
                                             </div>
-                                        </div>
-                                    </Form>
-                                )}
-                            </Formik>
-                            :
-                            <Formik
-                                initialValues={initialValue}
-                                validationSchema={dataSchema}
-                                onSubmit={(values, action) => {
-                                    alert(JSON.stringify(values));
-                                    action.resetForm()
-
-                                }}
-                            >
-                                {({ isSubmitting, errors, dirty }) => {
-                                    console.log(errors);
-
-                                    return (
-                                        <Form >
+                                            :
                                             <div className='flex flex-col pt-7'>
                                                 {/* NAMA TIKET */}
                                                 <label htmlFor="" className='font-semibold text-gray-700'>Nama tiket <span className='text-red-700'>*</span></label>
                                                 <Field
                                                     type='text'
-                                                    name='namatiket'
+                                                    name='ticketName'
                                                     placeholder='Maksimal 50 karakter'
                                                     className='w-full border-b  focus:border-blue-700 border-gray-500 outline-none h-10 pb-3'
                                                 />
                                                 <ErrorMessage
-                                                    name='namatiket'
+                                                    name='ticketName'
                                                     component='div'
                                                     className='text-xs text-red-700'
                                                 />
@@ -153,13 +141,13 @@ const CardTicketBerbayar = () => {
                                                 {/* JUMLAH TIKET */}
                                                 <label htmlFor="" className='font-semibold text-gray-700 pt-5'>Jumlah tiket</label>
                                                 <Field
-                                                    type='text'
-                                                    name='jmlhtiket'
+                                                    type='number'
+                                                    name='quota'
                                                     placeholder='0'
-                                                    className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5'
+                                                    className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                                                 />
                                                 <ErrorMessage
-                                                    name='jmlhtiket'
+                                                    name='quota'
                                                     component='div'
                                                     className='text-xs text-red-700'
                                                 />
@@ -167,26 +155,27 @@ const CardTicketBerbayar = () => {
                                                 {/* HARGA */}
                                                 <label htmlFor="" className='font-semibold text-gray-700 pt-5'>Harga tiket</label>
                                                 <Field
-                                                    type='text'
-                                                    name='harga'
+                                                    type='number'
+                                                    name='price'
                                                     placeholder='Rp 0'
-                                                    className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5'
+                                                    className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                                                 />
                                                 <ErrorMessage
-                                                    name='harga'
+                                                    name='price'
                                                     component='div'
                                                     className='text-xs text-red-700'
                                                 />
                                                 <div className='pt-10'>
-                                                    <button disabled={!!errors.harga || !!errors.jmlhtiket || !!errors.namatiket || isSubmitting || !dirty} onClick={handleActive} type='submit' className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
+                                                    <button type='submit' disabled={!!errors.quota || !!errors.price || !!errors.ticketName || !!isSubmitting || !dirty} onClick={handleActive} className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
                                                 </div>
                                             </div>
-                                        </Form>
-                                    )
-                                }}
-                            </Formik>
 
-                        }
+                                        }
+                                    </Form>
+                                )
+                            }}
+                        </Formik>
+
                     </div>
                 </ModalTicketing>
 
