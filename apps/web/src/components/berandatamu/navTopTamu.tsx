@@ -19,7 +19,7 @@ import { IoIosInformationCircle } from "react-icons/io";
 
 
 interface SearchForm {
-    search: string
+    search: string 
 }
 
 

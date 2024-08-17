@@ -5,20 +5,23 @@ import * as yup from 'yup';
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from 'react';
+import { registerUser } from '../libs/action/user';
 
 const validationSchema = yup.object().shape({
-    namaDepan: yup.string().required("mohon masukan nama depan anda"),
-    namaBelakang: yup.string().required("mohon masukan nama belakang anda"),
+    username: yup.string().required("silahkan masukan nama akun anda"),
+    firstName: yup.string().required("mohon masukan nama depan anda"),
+    lastName: yup.string().required("mohon masukan nama belakang anda"),
     email: yup.string().required("mohon masukan email anda").email("email tidak valid"),
-    nomorTelfon: yup.number().required('mohon masukan nomor ponsel anda'),
+    phone: yup.string().required('mohon masukan nomor ponsel anda'),
     password: yup.string().required("mohon masukan password anda").min(8, "minimal 8 karakter")
 })
 
-interface MyFormValue {
-    namaDepan: string
-    namaBelakang: string
+export interface MyFormValue {
+    username: String
+    firstName: string
+    lastName: string
     email: string
-    nomorTelfon: string
+    phone: string
     password: string
 }
 
@@ -26,12 +29,22 @@ export default function FormikRegisterEO() {
     const [show, setShow] = useState<boolean>(false)
 
     const initialValues: MyFormValue = {
-        namaDepan: '',
-        namaBelakang: '',
+        username: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        nomorTelfon: '',
+        phone: '',
         password: ''
     }
+
+    const onRegisterUser = async (data: MyFormValue) => {
+        try {
+            const res = await registerUser(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     return (
         <Formik
             initialValues={initialValues}
@@ -39,6 +52,7 @@ export default function FormikRegisterEO() {
             onSubmit={(values, action) => {
                 console.log(values);
                 alert(JSON.stringify(values))
+                onRegisterUser(values)
                 action.resetForm()
             }}
         >
@@ -47,20 +61,30 @@ export default function FormikRegisterEO() {
                     <Form>
                         <div className='flex flex-col gap-4'>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="namaDepan"
-                                    placeholder='nama depan'
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="username"
+                                    placeholder='nama akun'
                                 />
                                 <ErrorMessage
-                                    name='namaDepan'
+                                    name='username'
                                     component='div'
                                     className='text-red-600 text-sm'
                                 />
                             </div>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="namaBelakang"
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="firstName"
+                                    placeholder='nama depan'
+                                />
+                                <ErrorMessage
+                                    name='firstName'
+                                    component='div'
+                                    className='text-red-600 text-sm'
+                                />
+                            </div>
+                            <div>
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="lastName"
                                     placeholder='nama belakang ' />
                                 <ErrorMessage
-                                    name='namaBelakang'
+                                    name='lastName'
                                     component='div'
                                     className='text-red-600 text-sm'
                                 />
@@ -76,10 +100,10 @@ export default function FormikRegisterEO() {
                                 />
                             </div>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' type="number" name="nomorTelfon"
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' type="text" name="phone"
                                     placeholder='nomor ponsel' />
                                 <ErrorMessage
-                                    name='nomorTelfon'
+                                    name='phone'
                                     component='div'
                                     className='text-red-600 text-sm'
                                 />

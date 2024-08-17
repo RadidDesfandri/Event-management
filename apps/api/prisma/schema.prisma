@@ -34,9 +34,11 @@ model User {
   username    String        @unique
   email       String        @unique
   password    String
-  phone       String        @unique
-  referal     String        @unique
-  point       Int
+  firstName   String
+  lastName    String
+  phone       String        @unique @default("")
+  referal     String        @unique @default("")
+  point       Int           @default(0)
   avatar      String?
   isVerified  Boolean       @default(false)
   Transaction Transaction[]
@@ -44,13 +46,15 @@ model User {
 }
 
 model EO {
-  id         Int      @unique @default(autoincrement())
-  username   String   @unique
-  email      String   @unique
+  id         Int     @unique @default(autoincrement())
+  username   String  @unique
+  email      String  @unique
   password   String
-  phone      String   @unique
+  firstName  String
+  lastName   String
+  phone      String  @unique
   avatar     String?
-  isVerified Boolean  @default(false)
+  isVerified Boolean @default(false)
   Events     Events?
 }
 
@@ -79,7 +83,7 @@ model Events {
   Transaction Transaction[]
   Review      Review[]
   Promotion   Promotion[]
-  eo          EO?            @relation(fields: [eo_Id], references: [id])
+  eo          EO?           @relation(fields: [eo_Id], references: [id])
 }
 
 model Transaction {
