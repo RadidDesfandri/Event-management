@@ -55,21 +55,21 @@ export default class App {
   private routes(): void {
     // const sampleRouter = new SampleRouter();
     const userRouter = new UserRouter();
-    const eventRouter = new EventRouter()
+    const eventRouter = new EventRouter();
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
 
     this.app.use('/api/users', userRouter.getRouter())
-    this.app.use('/api/event',  eventRouter.getRouter)
+    this.app.use('/api/event',  eventRouter.getRouter())
 
     // this.app.use('/api/samples', getRouter());
   }
 
   public start(): void {
     this.app.listen(PORT, () => {
-      console.log(`  ➜  [API] Local:   http://localhost:${PORT}/`);
+      console.log(` ➜  [API] Local:   http://localhost:${PORT}/`);
     });
   }
 }
