@@ -10,23 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Ticket {
-  free
-  paid
-}
-
 enum Cetegory {
-  konser
-  pertandingan
-  cosplay
-  pameran
+  Konser
+  Pertandingan
+  Cosplay
+  Pameran
 }
 
 enum Status {
-  pending
-  waiting
-  paid
-  declined
+  Pending
+  Waiting
+  Paid
+  Declined
 }
 
 model User {
@@ -46,16 +41,16 @@ model User {
 }
 
 model EO {
-  id         Int     @unique @default(autoincrement())
-  username   String  @unique
-  email      String  @unique
+  id         Int      @unique @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
   password   String
   firstName  String
   lastName   String
-  phone      String  @unique
+  phone      String   @unique
   avatar     String?
-  isVerified Boolean @default(false)
-  Events     Events?
+  isVerified Boolean  @default(false)
+  Events     Events[]
 }
 
 model Review {
@@ -71,19 +66,28 @@ model Review {
 model Events {
   id          Int           @unique @default(autoincrement())
   eventName   String        @unique
-  price       Float
   date        String
   location    String
   description String        @db.Text
-  quota       Int
-  ticketType  Ticket
-  eo_Id       Int           @unique
   image       String?
+  eOId        Int
   category    Cetegory
   Transaction Transaction[]
   Review      Review[]
   Promotion   Promotion[]
-  eo          EO?           @relation(fields: [eo_Id], references: [id])
+  Ticketing   Ticketing[]
+  eo          EO            @relation(fields: [eOId], references: [id])
+}
+
+model Ticketing {
+  id         Int    @unique @default(autoincrement())
+  nameTicket String
+  quota      Int
+  price      Float? @default(0)
+  startDate  DateTime?
+  endDate    DateTime?
+  eventsId   Int
+  event      Events @relation(fields: [eventsId], references: [id])
 }
 
 model Transaction {
