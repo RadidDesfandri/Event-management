@@ -3,7 +3,6 @@ import React from 'react'
 import LogoLg from '../logoLg'
 import Link from 'next/link'
 import FormikRegisterEO from './formikRegister'
-import Button from '../button'
 
 export default function DesainRegisterEO({link} : {link : string}) {
     return (

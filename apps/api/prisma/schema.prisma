@@ -31,9 +31,9 @@ model User {
   password    String
   firstName   String
   lastName    String
-  phone       String        @unique
-  referal     String        @unique
-  point       Int
+  phone       String        @unique @default("")
+  referal     String        @unique @default("")
+  point       Int           @default(0)
   avatar      String?
   isVerified  Boolean       @default(false)
   Transaction Transaction[]
