@@ -8,12 +8,14 @@ interface ImagePreviewProps {
     image?: File | null;
     setFieldValue: (field: string, values: any, shouldValidate?: boolean) => void
     imageRef: React.RefObject<HTMLInputElement>
+    setSelectedImage: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const ImagePriview: React.FC<ImagePreviewProps> = ({ image, setFieldValue, imageRef }) => {
+export const ImagePreview: React.FC<ImagePreviewProps> = ({ image, setFieldValue, imageRef, setSelectedImage }) => {
     const [imageUrl, setImageUrl] = React.useState<string | null>(null)
     const onRemove = () => {
         setFieldValue('image', null)
+        setSelectedImage(false)
         if (imageRef.current) {
             imageRef.current.value = ''
         }
@@ -48,7 +50,6 @@ export const ImagePriview: React.FC<ImagePreviewProps> = ({ image, setFieldValue
             <button
                 onClick={onRemove}
                 className="absolute top-2 right-2 bg-black bg-opacity-60 text-xl hover:bg-opacity-45 text-white rounded-full p-1"
-            // style={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}
             >
                 <IoCloseOutline />
             </button>
