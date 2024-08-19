@@ -10,6 +10,7 @@ import { IoMdShare } from "react-icons/io";
 import { PayTiket } from './PayTiket'
 import { ModalPayTiket } from '../modal/ModalPayTiket'
 import { IEvent } from '../types/event'
+import ListBuyTicket from './ListBuyTicket'
 
 const DescHarga = ({data} : {data : IEvent}) => {
     const [isActive, setIsActive] = useState(false)
@@ -51,18 +52,17 @@ const DescHarga = ({data} : {data : IEvent}) => {
                                     <div className='px-5 py-5 lg:px-0'>
                                         <FaArrowLeftLong onClick={closeModal} className='w-7 h-7 text-gray-800' />
                                     </div>
-                                    <PayTiket />
+                                    <PayTiket data={data}/>
                                 </div>
                             </ModalPayTiket>
                             {/* Active modal pay end */}
 
                         </div>
-                        <BuyTiket data={data}/>
-                        <BuyTiket data={data}/>
+                        {/* <BuyTiket /> */}
+                        <ListBuyTicket data={data}/>
                     </div>
                     :
                     <div className='w-full my-10 px-5 lg:px-0'>
-                        <DeskripsiDetailEvent data={data}/>
                         <DeskripsiDetailEvent data={data}/>
                     </div>
                 }

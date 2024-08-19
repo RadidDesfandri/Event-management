@@ -1,5 +1,5 @@
 import prisma from "@/prisma";
-import { Request, Response } from "express";
+import { query, Request, Response } from "express";
 
 const base_url = process.env.BASE_URL || "http://localhost/8000/api"
 
@@ -33,7 +33,7 @@ export class EventController {
                         },
                     },
                 },
-                orderBy: [{ createdAt: "desc" }]
+                orderBy: [{ eOId: "desc" }]
             })
             return res.status(200).send({
                 status: "ok",
@@ -93,10 +93,21 @@ export class EventController {
         }
     }
 
+    async getAllEvent(req: Request, res: Response) {
+        try {
+
+        } catch (err) {
+
+        }
+    }
+
     async createEvent(req: Request, res: Response) {
         try {
             const media = `${base_url}/public/event/${req.file?.filename}`
-            // console.log(media);
+            const startDate = new Date(req.body.startDate)
+            const endDate = new Date(req.body.endDate)
+            const quota = parseFloat(req.body.quota)
+            const price = parseFloat(req.body.price)
 
             await prisma.events.create({
                 data: {
@@ -106,18 +117,16 @@ export class EventController {
                     description: req.body.description,
                     date: req.body.date,
                     image: media,
+                    Ticketing: {
+                        create: {
+                            nameTicket: req.body.nameTicket,
+                            quota: quota,
+                            price: price,
+                            startDate: startDate,
+                            endDate: endDate
+                        }
+                    },
                     eOId: +req.params.id
-                }
-            })
-
-            await prisma.ticketing.create({
-                data: {
-                    nameTicket: req.body.nameTicket,
-                    quota: req.body.quota,
-                    price: req.body.id,
-                    startDate: req.body.startDate,
-                    endDate: req.body.endDate,
-                    eventsId: req.params.id
                 }
             })
 
