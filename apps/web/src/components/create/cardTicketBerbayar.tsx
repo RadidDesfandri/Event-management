@@ -89,7 +89,7 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
                             initialValues={initialValue}
                             validationSchema={dataSchema}
                             onSubmit={(values, action) => {
-                                alert(JSON.stringify(values));
+                                // alert(JSON.stringify(values));
                                 setTicket([...ticket, values])
                                 action.resetForm()
 

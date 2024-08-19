@@ -55,7 +55,7 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
                     <div className='w-[235px] h-[90px] relative'>
                         <div className='w-full h-full flex flex-col px-8 justify-center'>
                             <h1 className='text-sm'>Buat Tiket</h1>
-                            <h1 className='font-semibold'>Berbayar</h1>
+                            <h1 className='font-semibold'>Gratis</h1>
                         </div>
                         <div className='absolute flex items-center justify-center text-xl h-[35px] w-[35px] rounded-full border-2 border-gray-400 text-gray-400 top-[30%] right-4'>
                             <FaPlus />

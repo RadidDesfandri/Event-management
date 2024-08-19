@@ -13,6 +13,7 @@ import { UserRouter } from './routers/user.router';
 import { EventRouter } from './routers/event.router';
 import { TicketRouter } from './routers/ticket.router';
 import { AuthRouter } from './routers/auth.routers';
+import path from "path"
 // import { SampleRouter } from './routers/sample.router';
 
 export default class App {
@@ -29,6 +30,7 @@ export default class App {
     this.app.use(cors());
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
+    this.app.use('/api/public', express.static(path.join(__dirname, '../public')))
   }
 
   private handleError(): void {
