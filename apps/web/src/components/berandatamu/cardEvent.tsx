@@ -5,7 +5,7 @@ import formatDateM, { formatDateID } from '../utils/FormatDate';
 import Link from 'next/link';
 
 export default function CardEvent({ data }: { data: IEvent }) {
-  const free : any = data?.Ticketing[0]?.price == 0 ? "Gratis" : data?.Ticketing[0]?.price
+  const free: any = data?.Ticketing[0]?.price == 0 ? "Gratis" : data?.Ticketing[0]?.price
   // console.log(data);
 
   return (

@@ -120,6 +120,7 @@ export class EventController {
                     eventsId: req.params.id
                 }
             })
+
             return res.status(200).send({
                 status: "ok",
                 msg: 'Event created'

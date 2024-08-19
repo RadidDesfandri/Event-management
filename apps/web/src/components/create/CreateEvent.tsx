@@ -64,6 +64,7 @@ export const CreateEvent = () => {
         image: yup.mixed().required('Harap diisi'),
         description: yup.string().required("Harap diisi")
     })
+    console.log(ticket);
 
     return (
         <div className='w-full py-8 bg-gray-200'>
@@ -73,7 +74,11 @@ export const CreateEvent = () => {
                 onSubmit={(value, action) => {
                     // alert(JSON.stringify(value))
                     handleEvent(value)
+                    // alert(JSON.stringify(value))
+                    handleEvent(value)
                     action.resetForm()
+                    action.setFieldValue('description', '')
+                    setTicket([])
                     action.setFieldValue('description', '')
                     setTicket([])
                 }}
