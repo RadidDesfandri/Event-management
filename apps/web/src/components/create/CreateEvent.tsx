@@ -13,6 +13,17 @@ import { IoLocationSharp } from 'react-icons/io5'
 import { ImagePriview } from './imagePriview'
 import { Ticketing } from './ticketing'
 
+
+interface FormValue {
+    eventName: string;
+    category: string;
+    location: string;
+    description: string;
+    image: File | null;
+    date: string;
+    ticket?: ITicket[]
+}
+
 export const CreateEvent = () => {
     const [isActive, setIsActive] = useState(false)
 
@@ -33,13 +44,19 @@ export const CreateEvent = () => {
         setIsActive(!isActive)
     }
 
-    const initialValue: IEvent = {
+
+    const initialValue: FormValue = {
         image: null,
         eventName: '',
         category: '',
         location: '',
         date: '',
         description: ''
+    }
+
+    const handleEvent = (value: FormValue) => {
+        value.ticket = ticket
+        console.log(value);
     }
 
     const dataSchema = yup.object().shape({
@@ -50,6 +67,7 @@ export const CreateEvent = () => {
         image: yup.mixed().required('Harap diisi'),
         description: yup.string().required("Harap diisi")
     })
+    console.log(ticket);
 
     return (
         <div className='w-full py-8 bg-gray-200'>
@@ -57,8 +75,11 @@ export const CreateEvent = () => {
                 initialValues={initialValue}
                 validationSchema={dataSchema}
                 onSubmit={(value, action) => {
-                    alert(JSON.stringify(value))
+                    // alert(JSON.stringify(value))
+                    handleEvent(value)
                     action.resetForm()
+                    action.setFieldValue('description', '')
+                    setTicket([])
                 }}
             >
                 {({ setFieldValue, isSubmitting, errors, dirty, values }) => {
@@ -169,6 +190,7 @@ export const CreateEvent = () => {
                                             className="w-full min-h-80 bg-transparent px-4 text-black border-2 rounded-md focus:outline-none resize-none"
                                             placeholder="Masukkan detail event disini!"
                                             onChange={(e) => setFieldValue('description', e.target.value)}
+                                            value={values.description}
                                             name='description'
                                         />
                                         <ErrorMessage
@@ -186,7 +208,7 @@ export const CreateEvent = () => {
                                         <h1 className='text-2xl font-bold text-gray-700'>Yeay!</h1>
                                         <p className='text-[12px] font-light text-gray-700'>Tinggal selangkah lagi dan event kamu berhasil dibuat.</p>
                                     </div>
-                                    <button disabled={!!errors.category || !!errors.image || !!errors.description || !!errors.location || !!errors.date || !!errors.eventName || isSubmitting || !dirty} type='submit' className=' bg-blue-500 disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 px-3 rounded-md font-semibold shadow-lg shadow-blue-500/50 '>Buat event sekarang</button>
+                                    <button disabled={!!errors.category || !!errors.image || !!errors.description || !!errors.location || !!errors.date || !!errors.eventName || isSubmitting || ticket.length == 0 || !dirty} type='submit' className=' bg-blue-500 disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 px-3 rounded-md font-semibold shadow-lg shadow-blue-500/50 '>Buat event sekarang</button>
                                 </div>
                                 {/* Section button end */}
                             </section>
@@ -196,6 +218,13 @@ export const CreateEvent = () => {
                 }}
             </Formik>
 
+            {ticket.map((ticket) => {
+                return (
+                    <div>
+                        {ticket.ticketName}
+                    </div>
+                )
+            })}
             {/* Ticketing start */}
             <Ticketing setTicket={setTicket} ticket={ticket} />
             {/* Ticketing end */}

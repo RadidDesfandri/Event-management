@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
 import Category from './category'
-import Event from './event'
 import Link from 'next/link'
+import ListEvents from './listEvents'
 
 export default function Hero() {
   return (
@@ -12,7 +12,7 @@ export default function Hero() {
         <Link href={'#event'} className='bg-blue-500 hover:bg-blue-600 transition-all duration-150 shadow-lg shadow-blue-500/50 rounded-lg absolute py-1 px-2 md:py-2 md:px-3 font-semibold text-gray-100 md:bottom-8 md:left-8 bottom-3 left-3 text-sm'>Jelajahi Sekarang</Link>
       </div>
       <Category />
-      <Event />
+      <ListEvents />
     </div>
   )
 }

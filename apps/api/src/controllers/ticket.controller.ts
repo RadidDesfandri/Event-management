@@ -27,7 +27,7 @@ export class TicketController {
                     price: req.body.price,
                     startDate: req.body.startDate,
                     endDate: req.body.endDate,
-                    eventsId: +req.params.id
+                    eventsId: req.params.id
                 }
             })
 
