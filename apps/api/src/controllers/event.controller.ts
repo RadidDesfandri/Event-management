@@ -105,8 +105,19 @@ export class EventController {
                     category: req.body.category,
                     description: req.body.description,
                     date: req.body.date,
-                    // image: media,
+                    image: media,
                     eOId: +req.params.id
+                }
+            })
+
+            await prisma.ticketing.create({
+                data: {
+                    nameTicket: req.body.nameTicket,
+                    quota: req.body.quota,
+                    price: req.body.id,
+                    startDate: req.body.startDate,
+                    endDate: req.body.endDate,
+                    eventsId: req.params.id
                 }
             })
 

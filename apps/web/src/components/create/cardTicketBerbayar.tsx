@@ -1,15 +1,15 @@
 "use client"
+
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { FaPlus } from "react-icons/fa6";
 import ModalTicketing from '../modal/ModalTicketing';
-import { ErrorMessage, Field, Form, Formik, useField, validateYupSchema } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from "yup"
 import Button from '../button';
 import { DatePickers } from './calendar';
 import { TicketProps } from './ticketing';
 import { ITicket } from '../types/event';
-
 
 const dataSchema = yup.object().shape({
     ticketName: yup.string().required('Harap diisi').max(50, "Maksimal 50 karakter"),
@@ -17,7 +17,6 @@ const dataSchema = yup.object().shape({
     price: yup.number().required('Harap diisi'),
     date: yup.string().required('Harap diisi')
 })
-
 
 const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
 
@@ -42,7 +41,6 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
     const closeModal = () => {
         setIsOpenModal(false)
     };
-
 
     return (
         <div className='bg-gray-100  py-8'>
@@ -84,7 +82,6 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
                             </div>
                         </div>
 
-
                         <Formik
                             initialValues={initialValue}
                             validationSchema={dataSchema}
@@ -92,7 +89,6 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
                                 // alert(JSON.stringify(values));
                                 setTicket([...ticket, values])
                                 action.resetForm()
-
                             }}
                         >
                             {({ isSubmitting, errors, dirty }) => {
@@ -111,7 +107,6 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
                                                             component='div'
                                                             className='text-xs text-red-700'
                                                         />
-
                                                     </div>
                                                     <h1 className='text-[10px] text-gray-700'>Tanggal maksimal penjualan bergantung pada tanggal berakhirnya event.</h1>
                                                 </div>
@@ -166,7 +161,7 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
                                                     className='text-xs text-red-700'
                                                 />
                                                 <div className='pt-10'>
-                                                    <button type='submit' disabled={!!errors.quota || !!errors.price || !!errors.ticketName || !!isSubmitting || !dirty} onClick={handleActive} className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
+                                                    <button  type='submit' disabled={!!errors.quota || !!errors.price || !!errors.ticketName || !!isSubmitting || !dirty} onClick={handleActive} className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
                                                 </div>
                                             </div>
 

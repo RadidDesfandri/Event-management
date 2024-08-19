@@ -58,9 +58,11 @@ const DescHarga = ({data} : {data : IEvent}) => {
 
                         </div>
                         <BuyTiket data={data}/>
+                        <BuyTiket data={data}/>
                     </div>
                     :
                     <div className='w-full my-10 px-5 lg:px-0'>
+                        <DeskripsiDetailEvent data={data}/>
                         <DeskripsiDetailEvent data={data}/>
                     </div>
                 }
