@@ -76,9 +76,6 @@ const ListPayTicket = ({ data }: { data: IEvent }) => {
                                         </div>
                                     )
                                 })}
-
-
-
                             </section>
                             {/* Section tiket end */}
 
