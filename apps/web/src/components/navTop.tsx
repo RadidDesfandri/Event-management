@@ -9,15 +9,11 @@ import { IoLogOut, IoMenu } from 'react-icons/io5'
 import Image from 'next/image'
 import ModalProfile from './modal/ModalProfile'
 import ModalSearch from './modal/modalSearch'
-import { Field, Form, Formik } from 'formik'
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaMoneyCheckAlt, FaUserAlt } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
-
-
-interface SearchForm {
-    search: string
-}
+import MenuSearch from './MenuSearch'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export default function NavTop() {
     const [isModalOpen, setIsModalOpen] = useState(false)
@@ -25,6 +21,19 @@ export default function NavTop() {
     const [isMenu, setIsMenu] = useState(false)
     const [logOut, setLogOut] = useState(false)
     const [logOutDesk, setLogOutDesk] = useState(false)
+    const [openSearch, setOpenSearch] = useState(false)
+    const [openSearchMobile, setOpenSearchMobile] = useState(false)
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const { replace } = useRouter()
+
+    const handleSearchMobile = () => {
+        setOpenSearchMobile(!openSearchMobile)
+    }
+
+    const handleMenuSearch = () => {
+        setOpenSearch(!openSearch)
+    }
 
     const handleLogOutDesk = () => {
         setLogOutDesk(!logOutDesk)
@@ -54,9 +63,17 @@ export default function NavTop() {
         setIsModalOpen(false)
     };
 
-    const initialValues: SearchForm = {
-        search: ''
+    const handleSearch = (term: string) => {
+        console.log(term);
+        const params = new URLSearchParams(searchParams);
+        if (term) {
+            params.set("q", term)
+        } else {
+            params.delete("q")
+        }
+        replace(`${pathname}?${params.toString()}`)
     }
+
 
     return (
         <Navbar shouldHideOnScroll className='z-20'>
@@ -66,52 +83,63 @@ export default function NavTop() {
                         <Link href={'/beranda'}><Logo /></Link>
 
                         <div className='flex gap-2 items-center'>
-                            <Formik
-                                initialValues={initialValues}
-                                onSubmit={(values, action) => {
-                                    alert(JSON.stringify(values))
-                                    action.resetForm()
-                                }}
-                            >
-                                <Form>
+                            {/* Search laptop start */}
+                            <div onClick={handleMenuSearch} className='backdrop-blur-md md:ml-6 px-3 lg:flex hidden bg-white/20 rounded-lg w-[180px] md:w-[350px] lg:w-[802px] items-center md:px-5'>
+                                <input
+                                    type="text"
+                                    name='search'
+                                    placeholder='Cari event seru di sini'
+                                    onChange={(e) => handleSearch(e.target.value)}
+                                    defaultValue={searchParams.get("q")?.toString()}
+                                    className='md:h-10 h-9 placeholder-white placeholder:text-sm md:placeholder:text-base bg-transparent rounded-md w-full focus:outline-none text-white' />
+                                <button type='submit'><IoIosSearch className='text-white w-5 h-5 cursor-pointer' /></button>
+                            </div>
 
-                                    {/* Search laptop start */}
-                                    <div className='backdrop-blur-md md:ml-6 px-3 lg:flex hidden bg-white/20 rounded-lg w-[180px] md:w-[350px] lg:w-[802px] items-center md:px-5'>
-                                        <Field
-                                            type="text"
-                                            name='search'
-                                            placeholder='Cari event seru di sini'
-                                            className='md:h-10 h-9 placeholder-white placeholder:text-sm md:placeholder:text-base bg-transparent rounded-md w-full focus:outline-none text-white' />
-                                        <button type='submit'><IoIosSearch className='text-white w-5 h-5 cursor-pointer' /></button>
-                                    </div>
-                                    {/* Search laptop end */}
+                            {openSearch &&
+                                <section onClick={handleMenuSearch} className='fixed w-full inset-0 z-50 h-screen'>
+                                    <main className='bg-white/70 py-2 absolute w-[802px] top-[60px] rounded-sm left-[136px]'>
+                                        <div className='flex flex-col gap-1'>
+                                            <MenuSearch />
+                                            <MenuSearch />
+                                        </div>
+                                    </main>
+                                </section>
+                            }
+                            {/* Search laptop end */}
 
-
-                                    {/* Search mobile start */}
-                                    <div className='block lg:hidden'>
-                                        <IoIosSearch onClick={searchOpen} className='text-white w-5 h-5 md:w-7 md:h-7 cursor-pointer' />
-                                        <ModalSearch isOpen={isSearchOpen} onClose={closeSearch}>
-                                            <div className='mt-5 px-4'>
-                                                <div className='flex items-center gap-2'>
-                                                    <IoIosArrowRoundBack onClick={closeSearch} className='w-8 h-8 cursor-pointer text-blue-700' />
-                                                    <div className='flex w-full bg-transparent border border-blue-700 rounded-lg h-8 pl-2'>
-                                                        <Field
-                                                            type="text"
-                                                            name='search'
-                                                            placeholder='Cari event seru di sini'
-                                                            className='w-full bg-transparent focus:outline-none'
-                                                        />
-                                                        <button type='submit' className='bg-blue-700 rounded-r-md w-10 flex items-center justify-center'>
-                                                            <IoIosSearch className='w-6 h-6 text-white cursor-pointer' />
-                                                        </button>
-                                                    </div>
-                                                </div>
+                            {/* Search mobile start */}
+                            <div className='block lg:hidden'>
+                                <IoIosSearch onClick={searchOpen} className='text-white w-5 h-5 md:w-7 md:h-7 cursor-pointer' />
+                                <ModalSearch isOpen={isSearchOpen} onClose={closeSearch}>
+                                    <div className='mt-5 px-4'>
+                                        <div className='flex items-center gap-2'>
+                                            <IoIosArrowRoundBack onClick={closeSearch} className='w-8 h-8 cursor-pointer text-blue-700' />
+                                            <div onClick={handleSearchMobile} className='flex w-full bg-transparent border border-blue-700 rounded-lg h-8 pl-2'>
+                                                <input
+                                                    type="text"
+                                                    name='search'
+                                                    placeholder='Cari event seru di sini'
+                                                    className='w-full bg-transparent focus:outline-none'
+                                                />
+                                                <button type='submit' className='bg-blue-700 rounded-r-md w-10 flex items-center justify-center'>
+                                                    <IoIosSearch className='w-6 h-6 text-white cursor-pointer' />
+                                                </button>
                                             </div>
-                                        </ModalSearch>
+                                            {openSearchMobile &&
+                                                <section onClick={handleSearchMobile} className='fixed w-full inset-0 z-50 h-screen'>
+                                                    <main className='absolute w-[370px] top-[60px] rounded-sm left-[30px]'>
+                                                        <div className='flex flex-col gap-1'>
+                                                            <MenuSearch />
+                                                            <MenuSearch />
+                                                        </div>
+                                                    </main>
+                                                </section>
+                                            }
+                                        </div>
                                     </div>
-                                    {/* Search mobile end */}
-                                </Form>
-                            </Formik>
+                                </ModalSearch>
+                            </div>
+                            {/* Search mobile end */}
 
                             <IoMenu onClick={handleMenu} className='w-8 h-8 text-white md:hidden block' />
 

@@ -3,6 +3,7 @@ import React from 'react'
 import { IEvent } from '../types/event';
 import formatDateM, { formatDateID } from '../utils/FormatDate';
 import Link from 'next/link';
+import ConvertToIDR from '../utils/ConvertToIDR';
 
 export default function CardEvent({ data }: { data: IEvent }) {
   const free: any = data?.Ticketing[0]?.price == 0 ? "Gratis" : data?.Ticketing[0]?.price
