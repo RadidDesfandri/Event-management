@@ -6,7 +6,27 @@ const base_url = process.env.BASE_URL || "http://localhost/8000/api"
 export class EventController {
     async getEvent(req: Request, res: Response) {
         try {
+            interface FilterQuery {
+                OR?: [{ eventName: { contains: string } }, { location: { contains: string } }, { eo: { username: { contains: string } } }];
+            }
+            const { query, page } = req.query
+            const limit = 12
+            const pages: number = page ? +page : 1
+            const filterQ: FilterQuery = {}
+
+            if (query) {
+                filterQ.OR = [
+                    { eventName: { contains: query as string } },
+                    { location: { contains: query as string } },
+                    { eo: { username: { contains: query as string } } }
+                ]
+            }
+            
             const event = await prisma.events.findMany({
+                orderBy: [{ createdAt: "desc" }],
+                where: filterQ,
+                take: limit,
+                skip: limit * (pages - 1),
                 select: {
                     id: true,
                     eventName: true,
@@ -21,7 +41,7 @@ export class EventController {
                             username: true,
                             email: true,
                             avatar: true
-                        },
+                        }
                     },
                     Ticketing: {
                         select: {
@@ -29,15 +49,14 @@ export class EventController {
                             quota: true,
                             price: true,
                             startDate: true,
-                            endDate: true
-                        },
-                    },
+                        }
+                    }
                 },
-                orderBy: [{ eOId: "desc" }]
             })
             return res.status(200).send({
                 status: "ok",
-                event
+                total: event.length,
+                event,
             })
 
         } catch (err) {
@@ -93,14 +112,6 @@ export class EventController {
         }
     }
 
-    async getAllEvent(req: Request, res: Response) {
-        try {
-
-        } catch (err) {
-
-        }
-    }
-
     async createEvent(req: Request, res: Response) {
         try {
             const media = `${base_url}/public/event/${req.file?.filename}`
@@ -109,7 +120,7 @@ export class EventController {
             const quota = parseFloat(req.body.quota)
             const price = parseFloat(req.body.price)
 
-            await prisma.events.create({
+            const event = await prisma.events.create({
                 data: {
                     eventName: req.body.eventName,
                     location: req.body.location,

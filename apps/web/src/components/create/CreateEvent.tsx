@@ -74,13 +74,8 @@ export const CreateEvent = () => {
                 onSubmit={(value, action) => {
                     // alert(JSON.stringify(value))
                     handleEvent(value)
-                    // alert(JSON.stringify(value))
-                    handleEvent(value)
                     action.resetForm()
                     action.setFieldValue('description', '')
-                    setTicket([])
-                    action.setFieldValue('description', '')
-                    setTicket([])
                 }}
             >
                 {({ setFieldValue, isSubmitting, errors, dirty, values }) => {
