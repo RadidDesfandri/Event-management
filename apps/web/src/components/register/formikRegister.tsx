@@ -25,7 +25,7 @@ export interface MyFormValue {
     password: string
 }
 
-export default function FormikRegisterEO() {
+export default function FormikRegister() {
     const [show, setShow] = useState<boolean>(false)
 
     const initialValues: MyFormValue = {

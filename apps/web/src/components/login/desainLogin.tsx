@@ -1,8 +1,8 @@
 import React from 'react'
 import LogoLg from '../logoLg'
 import Image from 'next/image'
-import FormikLoginEO from './formikLogin'
 import Link from 'next/link'
+import FormikLogin from './formikLogin'
 
 export default function DesainLogin({link} : {link : string}) {
   return (
@@ -35,7 +35,7 @@ export default function DesainLogin({link} : {link : string}) {
                 <p className="font-bold text-lg text-gray-950">Masuk ke akun Tricket kamu</p>
                 <p>belum punya akun? <Link href={`${link}`} className="text-blue-800 font-bold">Daftar</Link></p>
               </main>
-              <FormikLoginEO />
+              <FormikLogin/>
             </div>
             {/* Text akun tricket mobile end */}
           </section>

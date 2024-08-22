@@ -1,10 +1,14 @@
 "use client"
 
-import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import * as yup from 'yup';
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from 'react';
+import { loginUser } from '../libs/action/user';
+// import { UserLogin } from '../register/formikRegister';
+import { createCookie, navigate } from '../libs/action/server';
+import { useRouter } from 'next/navigation';
 
 const validationShema = yup.object().shape({
     email: yup.string().required("mohon masukan email anda").email("email tidak valid"),
@@ -16,19 +20,43 @@ interface MyFormValue {
     password: string
 }
 
-export default function FormikLoginEO() {
+export interface UserLogin {
+    email: string
+    password: string
+}
+
+export default function FormikLogin() {
     const [show, setShow] = useState<boolean>(false)
 
-    const initialValues: MyFormValue = {
+    const router = useRouter()
+
+    const initialValues: UserLogin = {
         email: '',
         password: ''
     }
+
+const onLogin = async (data: UserLogin, action: FormikHelpers<UserLogin>) => {
+    try {
+        const { result, ok } = await loginUser(data);
+        if (!ok) throw result.msg;
+        console.log(result);
+        createCookie('token',result.token);
+        // toast.info(result.msg);
+        action.resetForm();
+        router.push('/beranda')
+        // navigate('/');
+    } catch (error) {
+        // toast.error(err as string);
+        console.log(error);
+    }
+}
 
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={validationShema}
             onSubmit={(values, action) => {
+                onLogin(values, action);
                 console.log(values);
                 
                 alert(JSON.stringify(values))
