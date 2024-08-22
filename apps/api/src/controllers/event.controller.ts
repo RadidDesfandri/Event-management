@@ -53,9 +53,13 @@ export class EventController {
                     }
                 },
             })
+
+            const count = await prisma.events.count();
+
             return res.status(200).send({
                 status: "ok",
-                total: event.length,
+                totalPerPage: event.length,
+                allPage: Math.ceil(count / limit),
                 event,
             })
 

@@ -43,7 +43,7 @@ export default function NavTop() {
             } else {
                 setSearchRes([])
             }
-        }, 500)
+        }, 300)
 
         return () => clearTimeout(timeoutId)
     }, [term])
