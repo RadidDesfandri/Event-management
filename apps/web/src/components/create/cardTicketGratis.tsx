@@ -1,4 +1,5 @@
 "use client"
+
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { FaPlus } from "react-icons/fa6";
@@ -13,10 +14,12 @@ import { ITicket } from '../types/event';
 const dataSchema = yup.object().shape({
     ticketName: yup.string().required('Harap diisi').max(50, "Maksimal 50 karakter"),
     quota: yup.number().required("Harap diisi"),
+    price: yup.number().required('Harap diisi'),
     date: yup.string().required('Harap diisi')
 })
 
-const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
+const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
+
     const [isOpenModal, setIsOpenModal] = useState(false)
     const [isActive, setIsActive] = useState(false)
 
@@ -39,7 +42,6 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
         setIsOpenModal(false)
     };
 
-
     return (
         <div className='bg-gray-100  py-8'>
             <div className='flex justify-center mx-auto max-w-xl'>
@@ -47,7 +49,7 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
                 {/* Tiket start */}
                 <div onClick={openModal} className={`flex bg-white hover:bg-blue-400 shadow-sm border border-gray-200 rounded-lg`}>
                     <div className='w-[70px] h-[90px] relative border-dashed border-black border-r-2'>
-                        <Image src={'https://assets.loket.com/images/icon/icon-barcode.svg'} alt='barcode' width={8} height={8} className=' absolute top-[20%] left-[40%]' />
+                        <Image src='https://assets.loket.com/images/icon/icon-barcode.svg' alt='barcode' width={8} height={8} className=' absolute top-[20%] left-[40%]' />
                         <div className='absolute top-[-20px] border-b-2 border-gray-200 right-[-18px] bg-gray-100 rounded-full w-8 h-8'></div>
                         <div className='absolute bottom-[-20px] border-t-2 border-gray-200 right-[-18px] bg-gray-100 rounded-full w-8 h-8'></div>
                         <div className='absolute left-[-25px] border-r-2 border-gray-200 bg-gray-100 w-9 h-8 rounded-full top-[30%]'></div>
@@ -55,7 +57,7 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
                     <div className='w-[235px] h-[90px] relative'>
                         <div className='w-full h-full flex flex-col px-8 justify-center'>
                             <h1 className='text-sm'>Buat Tiket</h1>
-                            <h1 className='font-semibold'>Berbayar</h1>
+                            <h1 className='font-semibold'>Gratis</h1>
                         </div>
                         <div className='absolute flex items-center justify-center text-xl h-[35px] w-[35px] rounded-full border-2 border-gray-400 text-gray-400 top-[30%] right-4'>
                             <FaPlus />
@@ -63,7 +65,6 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
                     </div>
                 </div>
                 {/* Tiket end */}
-
 
                 <ModalTicketing isOpen={isOpenModal} onClose={closeModal}>
                     <div className='pt-4'>
@@ -80,12 +81,11 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
                             </div>
                         </div>
 
-
                         <Formik
                             initialValues={initialValue}
                             validationSchema={dataSchema}
                             onSubmit={(values, action) => {
-                                alert(JSON.stringify(values));
+                                // alert(JSON.stringify(values));
                                 setTicket([...ticket, values])
                                 action.resetForm()
 
@@ -107,7 +107,6 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
                                                             component='div'
                                                             className='text-xs text-red-700'
                                                         />
-
                                                     </div>
                                                     <h1 className='text-[10px] text-gray-700'>Tanggal maksimal penjualan bergantung pada tanggal berakhirnya event.</h1>
                                                 </div>
@@ -157,8 +156,13 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
                                                     placeholder='Rp 0'
                                                     className='w-full border-b py-5 focus:border-blue-700 border-gray-500 outline-none h-10 pb-5 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none'
                                                 />
+                                                <ErrorMessage
+                                                    name='price'
+                                                    component='div'
+                                                    className='text-xs text-red-700'
+                                                />
                                                 <div className='pt-10'>
-                                                    <button type='submit' disabled={!!errors.quota || !!errors.ticketName || !!isSubmitting || !dirty} onClick={handleActive} className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
+                                                    <button type='submit' disabled={!!errors.quota || !!errors.price || !!errors.ticketName || !!isSubmitting || !dirty} onClick={handleActive} className=' bg-blue-500 w-full disabled:bg-blue-500/40 disabled:text-gray-600 disabled:shadow-none hover:bg-blue-600 transition-all duration-150 py-2 rounded-md font-semibold shadow-lg shadow-blue-500/50'>Selanjutnya</button>
                                                 </div>
                                             </div>
                                         }
@@ -173,4 +177,4 @@ const CardTicketGratis = ({ ticket, setTicket }: TicketProps) => {
     )
 }
 
-export default CardTicketGratis
+export default CardTicketBerbayar

@@ -1,23 +1,22 @@
 "use client"
+
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { FaPlus } from "react-icons/fa6";
 import ModalTicketing from '../modal/ModalTicketing';
-import { ErrorMessage, Field, Form, Formik, useField, validateYupSchema } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from "yup"
 import Button from '../button';
 import { DatePickers } from './calendar';
 import { TicketProps } from './ticketing';
 import { ITicket } from '../types/event';
 
-
 const dataSchema = yup.object().shape({
-    ticketName: yup.string().required('Harap diisi').max(50, "Maksimal 50 karakter"),
+    ticketName: yup.string().max(50, "Maksimal 50 karakter").required('Harap diisi'),
     quota: yup.number().required("Harap diisi"),
-    price: yup.number().required('Harap diisi'),
+    price: yup.number().min(10, "Minimal 10 karakter").required('Harap diisi'),
     date: yup.string().required('Harap diisi')
 })
-
 
 const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
 
@@ -42,7 +41,6 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
     const closeModal = () => {
         setIsOpenModal(false)
     };
-
 
     return (
         <div className='bg-gray-100  py-8'>
@@ -84,15 +82,13 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
                             </div>
                         </div>
 
-
                         <Formik
                             initialValues={initialValue}
                             validationSchema={dataSchema}
                             onSubmit={(values, action) => {
-                                alert(JSON.stringify(values));
+                                // alert(JSON.stringify(values));
                                 setTicket([...ticket, values])
                                 action.resetForm()
-
                             }}
                         >
                             {({ isSubmitting, errors, dirty }) => {
@@ -111,7 +107,6 @@ const CardTicketBerbayar = ({ ticket, setTicket }: TicketProps) => {
                                                             component='div'
                                                             className='text-xs text-red-700'
                                                         />
-
                                                     </div>
                                                     <h1 className='text-[10px] text-gray-700'>Tanggal maksimal penjualan bergantung pada tanggal berakhirnya event.</h1>
                                                 </div>

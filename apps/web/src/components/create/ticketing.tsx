@@ -18,7 +18,7 @@ export const Ticketing = ({ ticket, setTicket }: TicketProps) => {
                 <button type='button' className={`text-center font-bold h-10 border-b w-full border-gray-400 `}>KATEGORI EVENT</button>
                 <span className={`w-full h-1 bg-blue-700 absolute left-0 bottom-0 rounded-t-lg`}></span>
             </div>
-            <div className='flex gap-8 items-center justify-center'>
+            <div className='flex gap-14 items-center justify-center'>
                 <CardTicketBerbayar ticket={ticket} setTicket={setTicket} />
                 <CardTicketGratis ticket={ticket} setTicket={setTicket} />
             </div>

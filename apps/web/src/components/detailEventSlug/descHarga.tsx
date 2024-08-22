@@ -9,8 +9,10 @@ import { FaArrowLeftLong, FaXTwitter } from "react-icons/fa6";
 import { IoMdShare } from "react-icons/io";
 import { PayTiket } from './PayTiket'
 import { ModalPayTiket } from '../modal/ModalPayTiket'
+import { IEvent } from '../types/event'
+import ListBuyTicket from './ListBuyTicket'
 
-export const DescHarga = () => {
+const DescHarga = ({data} : {data : IEvent}) => {
     const [isActive, setIsActive] = useState(false)
     const [isOpenModal, setIsOpenModal] = useState(false)
 
@@ -50,17 +52,18 @@ export const DescHarga = () => {
                                     <div className='px-5 py-5 lg:px-0'>
                                         <FaArrowLeftLong onClick={closeModal} className='w-7 h-7 text-gray-800' />
                                     </div>
-                                    <PayTiket />
+                                    <PayTiket data={data}/>
                                 </div>
                             </ModalPayTiket>
                             {/* Active modal pay end */}
 
                         </div>
-                        <BuyTiket />
+                        <ListBuyTicket data={data}/>
                     </div>
                     :
                     <div className='w-full my-10 px-5 lg:px-0'>
-                        <DeskripsiDetailEvent />
+                        <DeskripsiDetailEvent data={data}/>
+                        <DeskripsiDetailEvent data={data}/>
                     </div>
                 }
             </main>
@@ -93,3 +96,5 @@ export const DescHarga = () => {
         </section>
     )
 }
+
+export default DescHarga
