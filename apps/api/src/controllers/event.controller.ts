@@ -112,6 +112,14 @@ export class EventController {
         }
     }
 
+    async getAllEvent(req: Request, res: Response) {
+        try {
+
+        } catch (err) {
+
+        }
+    }
+
     async createEvent(req: Request, res: Response) {
         try {
             const media = `${base_url}/public/event/${req.file?.filename}`
