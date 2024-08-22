@@ -10,12 +10,109 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Sample {
-  id        Int      @id @default(autoincrement())
-  name      String
-  code      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum Cetegory {
+  Konser
+  Pertandingan
+  Cosplay
+  Pameran
+}
 
-  @@map("samples") // if you want to use snake_case format
+enum Status {
+  Pending
+  Waiting
+  Paid
+  Declined
+}
+
+model User {
+  id          Int           @unique @default(autoincrement())
+  username    String        @unique
+  email       String        @unique
+  password    String
+  firstName   String
+  lastName    String
+  phone       String        @unique @default("")
+  referal     String        @unique @default("")
+  point       Int           @default(0)
+  avatar      String?
+  isVerified  Boolean       @default(false)
+  Transaction Transaction[]
+  Review      Review[]
+}
+
+model EO {
+  id         Int      @unique @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  firstName  String
+  lastName   String
+  phone      String   @unique
+  avatar     String?
+  isVerified Boolean  @default(false)
+  Events     Events[]
+}
+
+model Review {
+  id       Int    @unique @default(autoincrement())
+  review   String @db.Text
+  ratings  Int
+  user_Id  Int    @unique
+  event_Id String @unique
+  user     User   @relation(fields: [user_Id], references: [id])
+  event    Events @relation(fields: [event_Id], references: [id])
+}
+
+model Events {
+  id          String        @unique @default(cuid())
+  eventName   String        
+  date        DateTime
+  location    String
+  description String        @db.Text
+  image       String?
+  eOId        Int
+  createdAt   DateTime      @default(now())
+  category    Cetegory
+  Transaction Transaction[]
+  Review      Review[]
+  Promotion   Promotion[]
+  Ticketing   Ticketing[]
+  eo          EO            @relation(fields: [eOId], references: [id])
+}
+
+model Ticketing {
+  id         Int       @unique @default(autoincrement())
+  nameTicket String
+  quota      Int
+  price      Float    @default(0)
+  startDate  DateTime
+  endDate    DateTime
+  eventsId   String
+  event      Events    @relation(fields: [eventsId], references: [id])
+}
+
+model Transaction {
+  id            String   @unique @default(cuid())
+  event_Id      String   @unique
+  user_Id       Int      @unique
+  qty           Int      @default(1)
+  totalPrice    Float
+  totalDiscount Int
+  finalPrice    Float
+  status        Status
+  proof         String
+  created_at    DateTime @default(now())
+  user          User     @relation(fields: [user_Id], references: [id])
+  event         Events   @relation(fields: [event_Id], references: [id])
+}
+
+model Promotion {
+  id          Int      @unique @default(autoincrement())
+  startDate   DateTime
+  endDate     DateTime
+  voucherCode String  
+  quota       Int?
+  percentage  Int?
+  event_Id    String   @unique
+  event       Events   @relation(fields: [event_Id], references: [id])
 }

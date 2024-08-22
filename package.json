@@ -17,6 +17,7 @@
     "husky": "^8.0.0",
     "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
+    "prettier-plugin-tailwindcss": "^0.6.6",
     "tsc-alias": "^1.8.10",
     "tsconfig": "*",
     "turbo": "latest"
@@ -33,6 +34,7 @@
     }
   },
   "dependencies": {
+    "@nextui-org/navbar": "^2.0.36",
     "@types/axios": "^0.14.0",
     "axios": "^1.7.2"
   }
