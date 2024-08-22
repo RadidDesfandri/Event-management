@@ -6,8 +6,8 @@ const ListEvents = async () => {
     const { result } = await getEvent()
 
     return (
-        <section id='event' className='lg:w-[800px] h-full py-6'>
-            <div className='md:justify-between md:flex md:flex-wrap gap-2'>
+        <section id='event' className='lg:w-[800px] h-full my-6'>
+            <div className='grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3'>
                 {result.event.map((item) => {
                     return (
                         <CardEvent key={item.id} data={item} />

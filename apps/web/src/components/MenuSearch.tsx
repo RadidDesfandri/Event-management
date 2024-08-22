@@ -1,23 +1,26 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { IEvent } from './types/event';
 
-const MenuSearch = () => {
+const MenuSearch = ({ data }: { data: IEvent }) => {
+    // console.log({ data });
+
     return (
-        <Link href={'#'}>
+        <Link href={`detailevent/${data.id}`}>
             <section className='px-2'>
-                <div className='bg-white rounded-sm px-2 py-2 flex items-center justify-between text-[10px] lg:text-sm font-semibold text-gray-950'>
+                <div className='bg-white rounded-sm px-2 mt-2 py-2 flex items-center justify-between text-[10px] lg:text-sm font-semibold text-gray-950'>
                     <main className='flex items-center gap-5'>
                         <Image
-                            src={'/sport1.jpg'}
+                            src={data.image}
                             alt='Avatar'
                             width={100}
                             height={100}
                             className='rounded-full bg-cover w-7 h-7'
                         />
-                        <p className=''>Moto-GP 2024 in tadika mesra</p>
+                        <p>{data.eventName}</p>
                     </main>
-                    <h1>PT Tadika Mesra</h1>
+                    <h1>{data.eo.username}</h1>
                 </div>
             </section>
         </Link>

@@ -6,8 +6,7 @@ import Link from 'next/link';
 import ConvertToIDR from '../utils/ConvertToIDR';
 
 export default function CardEvent({ data }: { data: IEvent }) {
-  const free: any = data?.Ticketing[0]?.price == 0 ? "Gratis" : data?.Ticketing[0]?.price
-  // console.log(data);
+  const free: any = data?.Ticketing[0]?.price == 0 ? "Gratis" : ConvertToIDR(data?.Ticketing[0]?.price)
 
   return (
     <Link href={`/detailevent/${data.id}`}>
@@ -16,8 +15,8 @@ export default function CardEvent({ data }: { data: IEvent }) {
         <p className='text-white text-[10px] absolute top-3 right-3'>{`${formatDateM(data.createdAt)} yang lalu`}</p>
         <div className='px-4 py-3'>
           <h1 className='text-base pb-2 font-extralight text-gray-100 truncate'>{data.eventName}</h1>
-          <h2 className=' font-semibold pb-2 text-gray-400'>{formatDateID(data.date)}</h2>
-          <h3 className=' text-white pb-8 font-bold'>{free}</h3>
+          <h2 className='font-semibold pb-2 text-gray-400'>{formatDateID(data.date)}</h2>
+          <h3 className='text-white pb-8 font-bold'>{free}</h3>
           <span className='w-full h-[1px] bg-gray-400 block'></span>
           <div className='flex items-center gap-3 pt-3'>
             <Image src="/sport1.jpg" alt='avatar' width={100} height={100} className='w-8 h-8 rounded-full object-cover ' />

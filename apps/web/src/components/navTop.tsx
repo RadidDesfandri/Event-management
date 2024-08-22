@@ -2,7 +2,7 @@
 
 import { Navbar } from '@nextui-org/navbar'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Logo from './logo'
 import { IoIosSearch, IoMdListBox } from 'react-icons/io'
 import { IoLogOut, IoMenu } from 'react-icons/io5'
@@ -13,9 +13,41 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { FaMoneyCheckAlt, FaUserAlt } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
 import MenuSearch from './MenuSearch'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { IEvent } from './types/event'
 
 export default function NavTop() {
+    const [searchRes, setSearchRes] = useState<IEvent[]>([])
+    const [term, setTerm] = useState("")
+
+    const fetchData = async (term: string) => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/events?query=${term}`)
+            const data = await response.json()
+            setSearchRes(data.event)
+            console.log(searchRes);
+
+        } catch (err) {
+            return Error
+        }
+    }
+
+    const handleData = (e: any) => {
+        setTerm(e.target.value)
+        fetchData(e)
+    }
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            if (term.trim() !== "") {
+                fetchData(term)
+            } else {
+                setSearchRes([])
+            }
+        }, 500)
+
+        return () => clearTimeout(timeoutId)
+    }, [term])
+
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isSearchOpen, setIsSearchOpen] = useState(false)
     const [isMenu, setIsMenu] = useState(false)
@@ -23,9 +55,6 @@ export default function NavTop() {
     const [logOutDesk, setLogOutDesk] = useState(false)
     const [openSearch, setOpenSearch] = useState(false)
     const [openSearchMobile, setOpenSearchMobile] = useState(false)
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter()
 
     const handleSearchMobile = () => {
         setOpenSearchMobile(!openSearchMobile)
@@ -63,18 +92,6 @@ export default function NavTop() {
         setIsModalOpen(false)
     };
 
-    const handleSearch = (term: string) => {
-        console.log(term);
-        const params = new URLSearchParams(searchParams);
-        if (term) {
-            params.set("q", term)
-        } else {
-            params.delete("q")
-        }
-        replace(`${pathname}?${params.toString()}`)
-    }
-
-
     return (
         <Navbar shouldHideOnScroll className='z-20'>
             <section className='w-full sticky top-0 backdrop-blur-lg bg-transparent'>
@@ -89,19 +106,27 @@ export default function NavTop() {
                                     type="text"
                                     name='search'
                                     placeholder='Cari event seru di sini'
-                                    onChange={(e) => handleSearch(e.target.value)}
-                                    defaultValue={searchParams.get("q")?.toString()}
+                                    onChange={handleData}
                                     className='md:h-10 h-9 placeholder-white placeholder:text-sm md:placeholder:text-base bg-transparent rounded-md w-full focus:outline-none text-white' />
                                 <button type='submit'><IoIosSearch className='text-white w-5 h-5 cursor-pointer' /></button>
                             </div>
 
                             {openSearch &&
                                 <section onClick={handleMenuSearch} className='fixed w-full inset-0 z-50 h-screen'>
-                                    <main className='bg-white/70 py-2 absolute w-[802px] top-[60px] rounded-sm left-[136px]'>
-                                        <div className='flex flex-col gap-1'>
-                                            <MenuSearch />
-                                            <MenuSearch />
-                                        </div>
+                                    <main className={`${searchRes.length == 0 ? "" : "bg-white/70"}  py-2 absolute w-[802px] top-[60px] rounded-sm left-[136px]`}>
+                                        {searchRes.map((item) => {
+                                            return (
+                                                <MenuSearch key={item.id} data={item} />
+                                            )
+                                        })}
+                                        {
+                                            searchRes.length == 0 && term && (
+                                                <div className= 'text-center bg-white px-5 rounded-md'>
+                                                    <Image src={'/notfound.svg'} alt='Not found' width={200} height={200} className='mx-auto'/>
+                                                    <p className='text-xl font-bold pb-3 text-blue-950'>GA KETEMU BEGE?!</p>
+                                                </div>
+                                            )
+                                        }
                                     </main>
                                 </section>
                             }
@@ -120,6 +145,7 @@ export default function NavTop() {
                                                     name='search'
                                                     placeholder='Cari event seru di sini'
                                                     className='w-full bg-transparent focus:outline-none'
+                                                    onChange={handleData}
                                                 />
                                                 <button type='submit' className='bg-blue-700 rounded-r-md w-10 flex items-center justify-center'>
                                                     <IoIosSearch className='w-6 h-6 text-white cursor-pointer' />
@@ -128,10 +154,11 @@ export default function NavTop() {
                                             {openSearchMobile &&
                                                 <section onClick={handleSearchMobile} className='fixed w-full inset-0 z-50 h-screen'>
                                                     <main className='absolute w-[370px] top-[60px] rounded-sm left-[30px]'>
-                                                        <div className='flex flex-col gap-1'>
-                                                            <MenuSearch />
-                                                            <MenuSearch />
-                                                        </div>
+                                                        {searchRes.map((item) => {
+                                                            return (
+                                                                <MenuSearch key={item.id} data={item} />
+                                                            )
+                                                        })}
                                                     </main>
                                                 </section>
                                             }
