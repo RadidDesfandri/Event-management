@@ -14,6 +14,7 @@ import { FaMoneyCheckAlt, FaUserAlt } from "react-icons/fa";
 import { MdVerifiedUser } from "react-icons/md";
 import MenuSearch from './MenuSearch'
 import { IEvent } from './types/event'
+import NotFound from './NotFound'
 
 export default function NavTop() {
     const [searchRes, setSearchRes] = useState<IEvent[]>([])
@@ -24,7 +25,7 @@ export default function NavTop() {
             const response = await fetch(`http://localhost:8000/api/events?query=${term}`)
             const data = await response.json()
             setSearchRes(data.event)
-            console.log(searchRes);
+            // console.log(searchRes);
 
         } catch (err) {
             return Error
@@ -121,10 +122,7 @@ export default function NavTop() {
                                         })}
                                         {
                                             searchRes.length == 0 && term && (
-                                                <div className= 'text-center bg-white px-5 rounded-md'>
-                                                    <Image src={'/notfound.svg'} alt='Not found' width={200} height={200} className='mx-auto'/>
-                                                    <p className='text-xl font-bold pb-3 text-blue-950'>GA KETEMU BEGE?!</p>
-                                                </div>
+                                                <NotFound height={200} width={200} background='bg-white' text='GA KETEMU BEGE?!' />
                                             )
                                         }
                                     </main>
@@ -156,9 +154,16 @@ export default function NavTop() {
                                                     <main className='absolute w-[370px] top-[60px] rounded-sm left-[30px]'>
                                                         {searchRes.map((item) => {
                                                             return (
-                                                                <MenuSearch key={item.id} data={item} />
+                                                                <div onClick={handleSearchMobile}>
+                                                                    <MenuSearch key={item.id} data={item} />
+                                                                </div>
                                                             )
                                                         })}
+                                                        {
+                                                            searchRes.length == 0 && term && (
+                                                                <NotFound height={150} width={150} text='GA KETEMU BEGE?!' />
+                                                            )
+                                                        }
                                                     </main>
                                                 </section>
                                             }
