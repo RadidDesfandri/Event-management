@@ -21,7 +21,7 @@ export class EventController {
                     { eo: { username: { contains: query as string } } }
                 ]
             }
-            
+
             const event = await prisma.events.findMany({
                 orderBy: [{ createdAt: "desc" }],
                 where: filterQ,
@@ -53,9 +53,13 @@ export class EventController {
                     }
                 },
             })
+
+            const count = await prisma.events.count();
+
             return res.status(200).send({
                 status: "ok",
-                total: event.length,
+                totalPerPage: event.length,
+                allPage: Math.ceil(count / limit),
                 event,
             })
 
@@ -97,7 +101,6 @@ export class EventController {
                     },
                 },
                 where: { id: req.params.id },
-
             })
 
             res.status(200).send({
@@ -112,21 +115,12 @@ export class EventController {
         }
     }
 
-    async getAllEvent(req: Request, res: Response) {
-        try {
-
-        } catch (err) {
-
-        }
-    }
-
     async createEvent(req: Request, res: Response) {
         try {
             const media = `${base_url}/public/event/${req.file?.filename}`
-            const startDate = new Date(req.body.startDate)
-            const endDate = new Date(req.body.endDate)
-            const quota = parseFloat(req.body.quota)
-            const price = parseFloat(req.body.price)
+            console.log(req.body)
+            console.log(JSON.parse(req.body.ticket))
+            const ticket = JSON.parse(req.body.ticket)
 
             const event = await prisma.events.create({
                 data: {
@@ -136,17 +130,21 @@ export class EventController {
                     description: req.body.description,
                     date: req.body.date,
                     image: media,
-                    Ticketing: {
-                        create: {
-                            nameTicket: req.body.nameTicket,
-                            quota: quota,
-                            price: price,
-                            startDate: startDate,
-                            endDate: endDate
-                        }
-                    },
-                    eOId: +req.params.id
+                    eOId: req.user?.id!
                 }
+            })
+
+            ticket.map( async (item: { ticketName: string; quota: string; price: string; date: string; }) => {
+                await prisma.ticketing.create({
+                    data:{
+                        nameTicket: item.ticketName,
+                        quota: +item.quota,
+                        price: +item.price,
+                        startDate: item.date,
+                        endDate: event.date,
+                        eventsId: event.id
+                    }
+                })
             })
 
             return res.status(200).send({

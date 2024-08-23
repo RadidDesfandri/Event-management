@@ -6,23 +6,23 @@ export interface IEO {
 
 export interface ITicketing {
     nameTicket: string;
-    quota: number;
-    price: number;
-    startDate: string | null;
-    endDate: string | null;
+    quota: string;
+    price: string;
+    startDate: string;
+    endDate: string;
 }
 
 export interface IEvent {
-    id: string;
+    id?: string;
     eventName: string;
     category: string;
     location: string;
     description: string;
     image: string;
     date: string;
-    createdAt: string;
-    eo: IEO;
-    Ticketing: ITicketing[];
+    createdAt?: string;
+    eo?: IEO;
+    Ticketing?: ITicketing[];
 }
 
 export interface ITicket {

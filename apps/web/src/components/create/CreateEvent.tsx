@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useState } from 'react'
-import { ITicket } from '../types/event'
+import { IEvent, ITicket } from '../types/event'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
 import * as yup from "yup"
 import { MdAccessTimeFilled, MdCloudUpload } from 'react-icons/md'
@@ -14,8 +14,11 @@ import { Ticketing } from './ticketing'
 import { formatDateID, formatTimeID } from '../utils/FormatDate'
 import ConvertToIDR from '../utils/ConvertToIDR'
 import { ImagePreview } from './imagePriview'
+import { createEvent } from '../libs/action/event'
+import { tagRevalidate } from '../libs/action/server'
+import { useRouter } from 'next/navigation'
 
-interface FormValue {
+export interface FormValue {
     eventName: string;
     category: string;
     location: string;
@@ -29,6 +32,18 @@ export const CreateEvent = () => {
     const [ticket, setTicket] = useState<ITicket[]>([])
     const mediaRef = useRef<HTMLInputElement | null>(null);
     const [selectedImage, setSelectedImage] = useState(false)
+    const router = useRouter()
+
+    const onEvent = async (data: FormValue) => {
+        try {
+            data.ticket = ticket
+            const { result } = await createEvent(data)
+            tagRevalidate("events")
+            router.push('/beranda')
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const handleFileChange = (event: any, setFieldValue: any) => {
         const file = event.target.files[0];
@@ -51,11 +66,6 @@ export const CreateEvent = () => {
         description: ''
     }
 
-    const handleEvent = (value: FormValue) => {
-        value.ticket = ticket
-        console.log(value);
-    }
-
     const dataSchema = yup.object().shape({
         eventName: yup.string().required('Harap diisi'),
         category: yup.string().required("Harap diisi"),
@@ -64,7 +74,6 @@ export const CreateEvent = () => {
         image: yup.mixed().required('Harap diisi'),
         description: yup.string().required("Harap diisi")
     })
-    console.log(ticket);
 
     return (
         <div className='w-full py-8 bg-gray-200'>
@@ -72,8 +81,7 @@ export const CreateEvent = () => {
                 initialValues={initialValue}
                 validationSchema={dataSchema}
                 onSubmit={(value, action) => {
-                    // alert(JSON.stringify(value))
-                    handleEvent(value)
+                    onEvent(value)
                     action.resetForm()
                     action.setFieldValue('description', '')
                 }}
@@ -251,7 +259,7 @@ export const CreateEvent = () => {
             {/* Ticketing start */}
             <Ticketing setTicket={setTicket} ticket={ticket} />
             {/* Ticketing end */}
-            
+
         </div>
     )
 }
