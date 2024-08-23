@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { createCookie, navigate } from '../libs/action/server';
 import { useRouter } from 'next/navigation';
 import { IloginEO } from '../types/auth';
-import { loginEo } from '../libs/action/eo';
+import { loginEO } from '../libs/action/eo';
 
 const validationShema = yup.object().shape({
     data: yup.string().required("mohon masukan email anda"),
@@ -24,7 +24,7 @@ export default function FormikLogineo() {
 
 const onLogin = async (data: IloginEO, action: FormikHelpers<IloginEO>) => {
     try {
-        const { result, ok } = await loginEo(data);
+        const { result, ok } = await loginEO(data);
         if (!ok) throw result.msg;
         createCookie('token',result.token);
         action.resetForm();
