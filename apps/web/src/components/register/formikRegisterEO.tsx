@@ -5,8 +5,8 @@ import * as yup from 'yup';
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from 'react';
-import { registerEo } from '../libs/action/EO';
 import { IEo } from '../types/auth';
+import { registerEo } from '../libs/action/eo';
 
 const validationSchema = yup.object().shape({
     username: yup.string().required("silahkan masukan nama akun anda"),

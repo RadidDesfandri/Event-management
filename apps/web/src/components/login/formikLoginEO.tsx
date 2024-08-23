@@ -4,12 +4,10 @@ import * as yup from 'yup';
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from 'react';
-import { loginUser } from '../libs/action/user';
 import { createCookie, navigate } from '../libs/action/server';
 import { useRouter } from 'next/navigation';
-import { UserLogin } from './formikLogin';
-import { loginEO } from '../libs/action/EO';
 import { IloginEO } from '../types/auth';
+import { loginEo } from '../libs/action/eo';
 
 const validationShema = yup.object().shape({
     data: yup.string().required("mohon masukan email anda"),
@@ -26,7 +24,7 @@ export default function FormikLogineo() {
 
 const onLogin = async (data: IloginEO, action: FormikHelpers<IloginEO>) => {
     try {
-        const { result, ok } = await loginEO(data);
+        const { result, ok } = await loginEo(data);
         if (!ok) throw result.msg;
         createCookie('token',result.token);
         action.resetForm();

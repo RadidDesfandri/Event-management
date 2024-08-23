@@ -1,4 +1,6 @@
 import { IEvent } from "@/components/types/event";
+import { getCookie } from "./server";
+import { FormValue } from "@/components/create/CreateEvent";
 
 export const getEvent = async () => {
     interface Response {
@@ -22,12 +24,24 @@ export async function getEventById(id: string) {
     return data
 }
 
-export const createEvent = async (data: IEvent) => {
+export const createEvent = async (data: FormValue) => {
+    const tgl = new Date(data.date).toISOString()
+    const token = await getCookie('token')
+    const formData = new FormData()
+    formData.append("eventName", data.eventName)
+    formData.append("location", data.location)
+    formData.append("category", data.category)
+    formData.append("description", data.description)
+    formData.append("date", tgl)
+    formData.append("file", data.image!)
+    formData.append("ticket", JSON.stringify(data.ticket))
+
     const res = await fetch("http://localhost:8000/api/events", {
         headers: {
-            "Content-Type": "application/json"
+            "Authorization": `Bearer ${token?.value}`
         },
-        method: "POST"
+        method: "POST",
+        body: formData
     })
 
     const response = await res.json()
