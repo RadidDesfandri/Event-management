@@ -13,6 +13,7 @@ import { UserRouter } from './routers/user.router';
 import { EventRouter } from './routers/event.router';
 import { AuthRouter } from './routers/auth.routers';
 import path from "path"
+import { AuthRouterEo } from './routers/authEo.router';
 // import { SampleRouter } from './routers/sample.router';
 
 export default class App {
@@ -60,6 +61,7 @@ export default class App {
     const userRouter = new UserRouter();
     const eventRouter = new EventRouter();
     const authrouter = new AuthRouter();
+    const authRouterEo = new AuthRouterEo();
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
@@ -68,6 +70,7 @@ export default class App {
     this.app.use('/api/users', userRouter.getRouter())
     this.app.use('/api/events', eventRouter.getRouter())
     this.app.use('/api/auth', authrouter.getRouter())
+    this.app.use('/api/autheo', authRouterEo.getRouter())
 
     // this.app.use('/api/samples', getRouter());
   }

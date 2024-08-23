@@ -25,7 +25,7 @@ export default function NavTop() {
             const response = await fetch(`http://localhost:8000/api/events?query=${term}`)
             const data = await response.json()
             setSearchRes(data.event)
-            console.log(searchRes);
+            // console.log(searchRes);
 
         } catch (err) {
             return Error
