@@ -2,9 +2,9 @@ import Image from 'next/image'
 import React from 'react'
 import LogoLg from '../logoLg'
 import Link from 'next/link'
-import FormikRegister from './formikRegister'
+import FormikRegisterEO from './formikRegisterEO'
 
-export default function DesainRegister({link} : {link : string}) {
+export default function DesainRegisterEO({link} : {link : string}) {
     return (
         <section className='w-full bg-white py-5'>
 
@@ -34,7 +34,7 @@ export default function DesainRegister({link} : {link : string}) {
                                 <p className="font-bold text-lg text-gray-950">Buat akun Tricket kamu</p>
                                 <p>sudah punya akun? <Link href={`${link}`} className="text-blue-800 font-bold">Masuk</Link></p>
                             </main>
-                            <FormikRegister/>
+                            <FormikRegisterEO/>
                         </div>
                         {/* Text akun tricket mobile end */}
                     </section>

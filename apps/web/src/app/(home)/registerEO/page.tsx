@@ -1,4 +1,5 @@
-import DesainRegisterEO from "@/components/register/desainRegister";
+import DesainRegisterEO from "@/components/register/desainRegisterEO";
+
 
 export default function page() {
     return (

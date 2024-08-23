@@ -65,7 +65,7 @@ model Review {
 
 model Events {
   id          String        @unique @default(cuid())
-  eventName   String        
+  eventName   String
   date        DateTime
   location    String
   description String        @db.Text
@@ -81,14 +81,14 @@ model Events {
 }
 
 model Ticketing {
-  id         Int       @unique @default(autoincrement())
+  id         Int      @unique @default(autoincrement())
   nameTicket String
   quota      Int
   price      Float    @default(0)
   startDate  DateTime
   endDate    DateTime
   eventsId   String
-  event      Events    @relation(fields: [eventsId], references: [id])
+  event      Events   @relation(fields: [eventsId], references: [id])
 }
 
 model Transaction {
@@ -110,7 +110,7 @@ model Promotion {
   id          Int      @unique @default(autoincrement())
   startDate   DateTime
   endDate     DateTime
-  voucherCode String  
+  voucherCode String
   quota       Int?
   percentage  Int?
   event_Id    String   @unique

@@ -1,9 +1,9 @@
-import DesainLogin from "@/components/login/desainLogin";
+import DesainLogineo from "@/components/login/desainLoginEO";
 
 export default function page() {
     return (
        <div>
-        <DesainLogin link="registerEO"/>
+        <DesainLogineo link="registerEO"/>
        </div>
     )
 }

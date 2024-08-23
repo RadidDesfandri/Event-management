@@ -1,42 +1,34 @@
 "use client"
-
 import { ErrorMessage, Field, Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import * as yup from 'yup';
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from 'react';
-import { loginUser } from '../libs/action/user';
-// import { UserLogin } from '../register/formikRegister';
 import { createCookie, navigate } from '../libs/action/server';
 import { useRouter } from 'next/navigation';
+import { IloginEO } from '../types/auth';
+import { loginEO } from '../libs/action/eo';
 
 const validationShema = yup.object().shape({
-    email: yup.string().required("mohon masukan email anda").email("email tidak valid"),
+    data: yup.string().required("mohon masukan email anda"),
     password: yup.string().required("mohon masukan password anda").min(8, "minimal 8 karakter")
 })
 
-export interface UserLogin {
-    email: string
-    password: string
-}
-
-export default function FormikLogin() {
+export default function FormikLogineo() {
     const [show, setShow] = useState<boolean>(false)
-
     const router = useRouter()
-
-    const initialValues: UserLogin = {
-        email: '',
+    const initialValues: IloginEO = {
+        data: '',
         password: ''
     }
 
-const onLogin = async (data: UserLogin, action: FormikHelpers<UserLogin>) => {
+const onLogin = async (data: IloginEO, action: FormikHelpers<IloginEO>) => {
     try {
-        const { result, ok } = await loginUser(data);
+        const { result, ok } = await loginEO(data);
         if (!ok) throw result.msg;
         createCookie('token',result.token);
         action.resetForm();
-        navigate ("/beranda")
+        navigate("/beranda")
     } catch (error) {
         console.log(error);
     }
@@ -48,9 +40,6 @@ const onLogin = async (data: UserLogin, action: FormikHelpers<UserLogin>) => {
             validationSchema={validationShema}
             onSubmit={(values, action) => {
                 onLogin(values, action);
-                // console.log(values);
-                
-                // alert(JSON.stringify(values))
                 action.resetForm()
             }}
         >
@@ -59,10 +48,10 @@ const onLogin = async (data: UserLogin, action: FormikHelpers<UserLogin>) => {
                     <Form>
                         <div className='flex flex-col content-center gap-4'>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="email" name="email" 
-                                placeholder="email (tricket@sampel.com)"/>
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="data" 
+                                placeholder="data atau username"/>
                                 <ErrorMessage
-                                    name='email'
+                                    name='data'
                                     component='div'
                                     className='text-red-600 text-sm'
                                 />
