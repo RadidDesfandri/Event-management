@@ -5,7 +5,8 @@ import * as yup from 'yup';
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
 import { useState } from 'react';
-import { registerUser } from '../libs/action/user';
+import { registerEo } from '../libs/action/EO';
+import { IEo } from '../types/auth';
 
 const validationSchema = yup.object().shape({
     username: yup.string().required("silahkan masukan nama akun anda"),
@@ -16,19 +17,10 @@ const validationSchema = yup.object().shape({
     password: yup.string().required("mohon masukan password anda").min(8, "minimal 8 karakter")
 })
 
-export interface MyFormValue {
-    username: String
-    firstName: string
-    lastName: string
-    email: string
-    phone: string
-    password: string
-}
-
-export default function FormikRegister() {
+export default function FormikRegisterEO() {
     const [show, setShow] = useState<boolean>(false)
 
-    const initialValues: MyFormValue = {
+    const initialValues: IEo = {
         username: '',
         firstName: '',
         lastName: '',
@@ -37,9 +29,10 @@ export default function FormikRegister() {
         password: ''
     }
 
-    const onRegisterUser = async (data: MyFormValue) => {
+    const onRegisterEO = async (data: IEo) => {
         try {
-            const res = await registerUser(data)
+            const res = await registerEo(data)
+            
         } catch (error) {
             console.log(error)
         }
@@ -50,13 +43,11 @@ export default function FormikRegister() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={(values, action) => {
-                // console.log(values);
-                // alert(JSON.stringify(values))
-                onRegisterUser(values)
+                onRegisterEO(values);
                 action.resetForm()
             }}
         >
-            {(props: FormikProps<MyFormValue>) => {
+            {(props: FormikProps<IEo>) => {
                 return (
                     <Form>
                         <div className='flex flex-col gap-4'>

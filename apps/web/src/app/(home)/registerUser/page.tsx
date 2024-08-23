@@ -1,8 +1,9 @@
-import DesainRegisterEO from "@/components/register/desainRegister";
+import DesainRegister from "@/components/register/desainRegister";
+
 export default function page() {
     return (
         <div>
-            <DesainRegisterEO link='/loginUser'/>
+            <DesainRegister link='/loginUser'/>
         </div>
     )
 }
