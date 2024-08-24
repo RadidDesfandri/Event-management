@@ -37,6 +37,7 @@ export const createEvent = async (data: FormValue) => {
     formData.append("ticket", JSON.stringify(data.ticket))
 
     const res = await fetch("http://localhost:8000/api/events", {
+        next: { revalidate: 100 },
         headers: {
             "Authorization": `Bearer ${token?.value}`
         },
