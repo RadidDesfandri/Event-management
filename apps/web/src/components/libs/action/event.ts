@@ -9,7 +9,7 @@ export const getEvent = async () => {
     }
 
     const res = await fetch("http://localhost:8000/api/events", {
-        next: { revalidate: 300 }
+        next: { revalidate: 60, tags: ['events'] }
     })
     const response: Response = await res.json()
 

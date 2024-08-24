@@ -34,7 +34,7 @@ model User {
   phone       String        @unique @default("")
   referal     String        @unique @default("")
   point       Int           @default(0)
-  avatar      String?
+  avatar      String? 
   isVerified  Boolean       @default(false)
   Transaction Transaction[]
   Review      Review[]

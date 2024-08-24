@@ -16,10 +16,14 @@ import MenuSearch from './MenuSearch'
 import { IEvent } from './types/event'
 import NotFound from './NotFound'
 import { deleteCookie, navigate } from './libs/action/server'
+import { UserState } from './types/user'
+import { useAppSelector } from '@/redux/hooks'
 
 export default function NavTop() {
     const [searchRes, setSearchRes] = useState<IEvent[]>([])
     const [term, setTerm] = useState("")
+    const user: UserState = useAppSelector((state) => state.user)
+    const src = user.avatar || "/profile.svg"
 
     const logOutToken = () => {
         deleteCookie("token")
@@ -238,15 +242,15 @@ export default function NavTop() {
 
                     {/* Profile */}
                     <div className='gap-3 hidden md:flex text-gray-100'>
-                        <Image onClick={openModal} src={'/pameran1.jpg'} alt='Profile' width={100} height={100} className='w-10 h-10 rounded-full object-cover cursor-pointer' />
+                        <Image onClick={openModal} src={src} alt='Profile' width={100} height={100} className='w-10 h-10 rounded-full object-cover cursor-pointer bg-blue-950' />
                     </div>
 
 
                     <ModalProfile isOpen={isModalOpen} onClose={closeModal}>
                         <div className=' flex flex-col'>
                             <div className='flex gap-2 items-center border-b pb-3'>
-                                <Image src={'/pameran1.jpg'} alt='Profile' width={100} height={100} className='w-10 h-10 rounded-full object-cover cursor-pointer' />
-                                <p className='font-bold text-gray-700'>Username</p>
+                                <Image src={src} alt='Profile' width={100} height={100} className='w-10 h-10 rounded-full object-cover cursor-pointer bg-blue-950' />
+                                <p className='font-bold text-gray-700'>{user.username}</p>
                             </div>
                             <div className='pt-3 border-b pb-3'>
                                 <Link href={'/dashboard'}><p className='py-2 px-2 font-semibold text-gray-700 hover:bg-gray-200 rounded-md transition-all duration-100'>Dashboard</p></Link>
