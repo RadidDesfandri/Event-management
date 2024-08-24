@@ -170,6 +170,7 @@ export default function NavTop() {
                                                                 <NotFound height={150} width={150} text='GA KETEMU BEGE?!' />
                                                             )
                                                         }
+
                                                     </main>
                                                 </section>
                                             }

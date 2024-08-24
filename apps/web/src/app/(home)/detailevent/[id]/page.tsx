@@ -14,7 +14,7 @@ export async function generateStaticParams() {
 }
 
 const DetailEvent = async ({ params }: { params: IEvent }) => {
-  const event = await getEventById(params.id)
+  const event = await getEventById(params.id!)
   // console.log({event});
   return (
     <div className='bg-blue-950'>

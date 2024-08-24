@@ -22,8 +22,12 @@ const MenuSearch = ({ data }: { data: IEvent }) => {
                             <p>{data.eventName}</p>
                             <p className='text-xs font-light italic'>{data.location}</p>
                         </div>
+                        <div className='text-black'>
+                            <p>{data.eventName}</p>
+                            <p className='text-xs font-light italic'>{data.location}</p>
+                        </div>
                     </main>
-                    <h1 className='text-black'>{data.eo.username}</h1>
+                    <h1 className='text-black'>{data.eo?.username}</h1>
                 </div>
             </section>
         </Link>

@@ -15,7 +15,7 @@ import { formatDateID, formatTimeID } from '../utils/FormatDate'
 import ConvertToIDR from '../utils/ConvertToIDR'
 import { ImagePreview } from './imagePriview'
 import { createEvent } from '../libs/action/event'
-import { tagRevalidate } from '../libs/action/server'
+import { navigate, tagRevalidate } from '../libs/action/server'
 import { useRouter } from 'next/navigation'
 
 export interface FormValue {
@@ -39,7 +39,7 @@ export const CreateEvent = () => {
             data.ticket = ticket
             const { result } = await createEvent(data)
             tagRevalidate("events")
-            router.push('/beranda')
+            navigate("/beranda")
         } catch (err) {
             console.log(err);
         }

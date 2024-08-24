@@ -20,7 +20,6 @@ const initialValue: JumlahTiket = {
 
 const ListPayTicket = ({ data }: { data: IEvent }) => {
     const event = data.Ticketing
-    console.log(event);
 
     return (
         <Formik
@@ -38,9 +37,9 @@ const ListPayTicket = ({ data }: { data: IEvent }) => {
                             {/* Section tiket start */}
                             <section className='flex flex-col items-center gap-4 lg:w-[550px] w-full'>
 
-                                {event.map((item) => {
-                                    const free = item?.price == 0 ? "Gratis" : ConvertToIDR(item.price)
-                                    const type = item?.price == 0 ? "Gratis" : "Berbayar"
+                                {event!.map((item) => {
+                                    const free = item?.price == "0" ? "Gratis" : ConvertToIDR(item.price)
+                                    const type = item?.price == "0" ? "Gratis" : "Berbayar"
                                     const date = formatDateID(item?.endDate!)
                                     const time = formatTimeID(item?.endDate!)
                                     return (
