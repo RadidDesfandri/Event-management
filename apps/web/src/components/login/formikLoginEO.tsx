@@ -8,6 +8,8 @@ import { createCookie, navigate } from '../libs/action/server';
 import { useRouter } from 'next/navigation';
 import { IloginEO } from '../types/auth';
 import { loginEO } from '../libs/action/eo';
+import { useAppDispatch } from '@/redux/hooks';
+import { loginAction } from '@/redux/slice/userSlice';
 
 const validationShema = yup.object().shape({
     data: yup.string().required("mohon masukan email anda"),
@@ -22,17 +24,20 @@ export default function FormikLogineo() {
         password: ''
     }
 
-const onLogin = async (data: IloginEO, action: FormikHelpers<IloginEO>) => {
-    try {
-        const { result, ok } = await loginEO(data);
-        if (!ok) throw result.msg;
-        createCookie('token',result.token);
-        action.resetForm();
-        navigate("/beranda")
-    } catch (error) {
-        console.log(error);
+    const dispatch = useAppDispatch()
+
+    const onLogin = async (data: IloginEO, action: FormikHelpers<IloginEO>) => {
+        try {
+            const { result, ok } = await loginEO(data);
+            if (!ok) throw result.msg;
+            createCookie('token', result.token);
+            dispatch(loginAction(result.userEo))
+            action.resetForm();
+            navigate("/beranda")
+        } catch (error) {
+            console.log(error);
+        }
     }
-}
 
     return (
         <Formik
@@ -48,8 +53,8 @@ const onLogin = async (data: IloginEO, action: FormikHelpers<IloginEO>) => {
                     <Form>
                         <div className='flex flex-col content-center gap-4'>
                             <div>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="data" 
-                                placeholder="data atau username"/>
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type="text" name="data"
+                                    placeholder="data atau username" />
                                 <ErrorMessage
                                     name='data'
                                     component='div'
@@ -57,14 +62,14 @@ const onLogin = async (data: IloginEO, action: FormikHelpers<IloginEO>) => {
                                 />
                             </div>
                             <div className='relative'>
-                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type={show? 'text':'password'} name="password"
-                                placeholder="password" />
+                                <Field className='h-12 w-80 bg-white font-medium border-2 border-gray-200 px-3 rounded-md' type={show ? 'text' : 'password'} name="password"
+                                    placeholder="password" />
                                 <ErrorMessage
                                     name='password'
                                     component='div'
                                     className='text-red-600 text-sm'
                                 />
-                                <span className='absolute top-5 right-3' onClick={() => setShow(!show)}>{show ? <AiFillEye/> : <AiFillEyeInvisible/> }</span>
+                                <span className='absolute top-5 right-3' onClick={() => setShow(!show)}>{show ? <AiFillEye /> : <AiFillEyeInvisible />}</span>
                             </div>
                             <button className='h-12 w-80 rounded-xl bg-blue-700 text-white font-semibold' type='submit'>Masuk</button>
                         </div>
