@@ -19,7 +19,7 @@ export interface PropsEvent {
 }
 
 export default async function PosterDate({ data }: { data: PropsEvent }) {
-    const event = await getEventById(data.event.id)
+    const event = await getEventById(data.event.id!)
     // console.log(event);
     
 
@@ -50,7 +50,7 @@ export default async function PosterDate({ data }: { data: PropsEvent }) {
                             <Image src={'/kultural1.jpg'} alt='avatar' width={100} height={100} className='w-[50px] h-[50px] rounded-full object-cover' />
                             <div className='text-sm'>
                                 <p className='text-gray-500'>Diselenggarakan oleh</p>
-                                <p className='font-semibold text-base'>{data.event.eo.username}</p>
+                                <p className='font-semibold text-base'>{data.event.eo!.username}</p>
                             </div>
                         </div>
                     </div>
