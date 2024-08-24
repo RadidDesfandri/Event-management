@@ -2,13 +2,15 @@ import { IEvent } from "@/components/types/event";
 import { getCookie } from "./server";
 import { FormValue } from "@/components/create/CreateEvent";
 
-export const getEvent = async () => {
+export const getEvent = async (page: any) => {
     interface Response {
+        allPage: string;
+        totalPerPage: string;
         status: string;
         event: IEvent[]
     }
 
-    const res = await fetch("http://localhost:8000/api/events", {
+    const res = await fetch(`http://localhost:8000/api/events?page=${page}`, {
         next: { revalidate: 60, tags: ['events'] }
     })
     const response: Response = await res.json()
