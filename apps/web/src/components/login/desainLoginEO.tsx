@@ -2,9 +2,9 @@ import React from 'react';
 import LogoLg from '../logoLg';
 import Image from 'next/image';
 import Link from 'next/link';
-import FormikLogin from './formikLogin';
+import FormikLogineo from './formikLoginEO';
 
-export default function DesainLogin({link} : {link : string}) {
+export default function DesainLogineo({link} : {link : string}) {
   return (
     <section className='w-full bg-white py-5'>
 
@@ -35,7 +35,7 @@ export default function DesainLogin({link} : {link : string}) {
                 <p className="font-bold text-lg text-gray-950">Masuk ke akun Tricket kamu</p>
                 <p>belum punya akun? <Link href={`${link}`} className="text-blue-800 font-bold">Daftar</Link></p>
               </main>
-              <FormikLogin/>
+              <FormikLogineo/>
             </div>
             {/* Text akun tricket mobile end */}
           </section>

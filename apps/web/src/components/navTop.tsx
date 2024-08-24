@@ -15,10 +15,16 @@ import { MdVerifiedUser } from "react-icons/md";
 import MenuSearch from './MenuSearch'
 import { IEvent } from './types/event'
 import NotFound from './NotFound'
+import { deleteCookie, navigate } from './libs/action/server'
 
 export default function NavTop() {
     const [searchRes, setSearchRes] = useState<IEvent[]>([])
     const [term, setTerm] = useState("")
+
+    const logOutToken = () => {
+        deleteCookie("token")
+        navigate("/")
+    }
 
     const fetchData = async (term: string) => {
         try {
@@ -164,6 +170,7 @@ export default function NavTop() {
                                                                 <NotFound height={150} width={150} text='GA KETEMU BEGE?!' />
                                                             )
                                                         }
+
                                                     </main>
                                                 </section>
                                             }
@@ -257,7 +264,7 @@ export default function NavTop() {
                                     <div className='w-full flex justify-end'>
                                         <div className='flex gap-3 mt-4 cursor-pointer'>
                                             <p onClick={handleLogOutDesk} className='p-1 w-20 text-center border rounded-md border-blue-600 font-bold text-blue-600'>TIDAK</p>
-                                            <p className='p-1 w-20 text-center bg-blue-600 border rounded-md hover:bg-red-600 hover:border-red-600 transition-all duration-200 border-blue-600 font-bold text-white'>YA</p>
+                                            <p onClick={logOutToken} className='p-1 w-20 text-center bg-blue-600 border rounded-md hover:bg-red-600 hover:border-red-600 transition-all duration-200 border-blue-600 font-bold text-white'>YA</p>
                                         </div>
                                     </div>
                                 </div>
