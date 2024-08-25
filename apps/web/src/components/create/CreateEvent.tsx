@@ -17,6 +17,8 @@ import { ImagePreview } from './imagePriview'
 import { createEvent } from '../libs/action/event'
 import { navigate, tagRevalidate } from '../libs/action/server'
 import { useRouter } from 'next/navigation'
+import { UserState } from '../types/user'
+import { useAppSelector } from '@/redux/hooks'
 
 export interface FormValue {
     eventName: string;
@@ -32,6 +34,8 @@ export const CreateEvent = () => {
     const [ticket, setTicket] = useState<ITicket[]>([])
     const mediaRef = useRef<HTMLInputElement | null>(null);
     const [selectedImage, setSelectedImage] = useState(false)
+    const user: UserState = useAppSelector((state) => state.user)
+    const src = user.avatar || "/profile.svg"
     const router = useRouter()
 
     const onEvent = async (data: FormValue) => {
@@ -40,7 +44,7 @@ export const CreateEvent = () => {
             const { result } = await createEvent(data)
             tagRevalidate("events")
             navigate("/beranda")
-        } catch (err) {
+        } catch (err) {``
             console.log(err);
         }
     }
@@ -140,11 +144,11 @@ export const CreateEvent = () => {
 
                                     <div className='flex flex-col md:flex-row md:items-center py-4 md:justify-between'>
                                         {/* Avatar start */}
-                                        <div className='md:h-[90px] w-[150px] cursor-default'>
+                                        <div className='md:h-[90px] cursor-default'>
                                             <h1 className='text-[14px] pb-2 font-semibold '>Diselenggarakan oleh</h1>
                                             <div className='flex items-center gap-3'>
-                                                <Image src={'/kultural1.jpg'} alt='Profile' width={100} height={100} className='w-16 h-16 rounded-full' />
-                                                <h1>Username</h1>
+                                                <Image src={src} alt='Profile' width={100} height={100} className='w-16 h-16 rounded-full bg-blue-950' />
+                                                <h1>{user.username}</h1>
                                             </div>
                                         </div>
                                         {/* Avatar end */}
