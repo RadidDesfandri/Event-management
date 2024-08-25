@@ -25,7 +25,7 @@ enum Status {
 }
 
 model User {
-  id          Int           @unique @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   username    String        @unique
   email       String        @unique
   password    String
@@ -34,14 +34,14 @@ model User {
   phone       String        @unique @default("")
   referal     String        @unique @default("")
   point       Int           @default(0)
-  avatar      String? 
+  avatar      String?
   isVerified  Boolean       @default(false)
   Transaction Transaction[]
   Review      Review[]
 }
 
 model EO {
-  id         Int      @unique @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   username   String   @unique
   email      String   @unique
   password   String
@@ -54,17 +54,17 @@ model EO {
 }
 
 model Review {
-  id       Int    @unique @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   review   String @db.Text
   ratings  Int
   user_Id  Int    @unique
-  event_Id String @unique
+  event_Id String 
   user     User   @relation(fields: [user_Id], references: [id])
   event    Events @relation(fields: [event_Id], references: [id])
 }
 
 model Events {
-  id          String        @unique @default(cuid())
+  id          String        @id @default(cuid())
   eventName   String
   date        DateTime
   location    String
@@ -81,7 +81,7 @@ model Events {
 }
 
 model Ticketing {
-  id         Int      @unique @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   nameTicket String
   quota      Int
   price      Float    @default(0)
@@ -92,27 +92,27 @@ model Ticketing {
 }
 
 model Transaction {
-  id            String   @unique @default(cuid())
-  event_Id      String   @unique
-  user_Id       Int      @unique
+  id            String   @id @default(uuid())
+  event_Id      String
+  user_Id       Int
   qty           Int      @default(1)
-  totalPrice    Float
-  totalDiscount Int
+  totalPrice    Float?
+  totalDiscount Int?
   finalPrice    Float
-  status        Status
-  proof         String
+  paymentLink   String
+  status        Status   @default(Pending)
   created_at    DateTime @default(now())
   user          User     @relation(fields: [user_Id], references: [id])
   event         Events   @relation(fields: [event_Id], references: [id])
 }
 
 model Promotion {
-  id          Int      @unique @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   startDate   DateTime
   endDate     DateTime
   voucherCode String
   quota       Int?
   percentage  Int?
-  event_Id    String   @unique
+  event_Id    String   
   event       Events   @relation(fields: [event_Id], references: [id])
 }

@@ -14,6 +14,8 @@ import { EventRouter } from './routers/event.router';
 import { AuthRouter } from './routers/auth.routers';
 import path from "path"
 import { UserEoRouter } from './routers/eo.routers';
+import { ReviewRouter } from './routers/review.router';
+import { TransactionRouter } from './routers/transaction.router';
 // import { SampleRouter } from './routers/sample.router';
 
 export default class App {
@@ -62,6 +64,8 @@ export default class App {
     const eventRouter = new EventRouter();
     const authrouter = new AuthRouter();
     const usereoRouter = new UserEoRouter();
+    const reviewRouter = new ReviewRouter()
+    const transactionRouter = new TransactionRouter()
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
@@ -71,6 +75,8 @@ export default class App {
     this.app.use('/api/events', eventRouter.getRouter())
     this.app.use('/api/auth', authrouter.getRouter())
     this.app.use('/api/autheo', usereoRouter.getRouter())
+    this.app.use('/api/review', reviewRouter.getRouter())
+    this.app.use('/api/order', transactionRouter.getRouter())
 
     // this.app.use('/api/samples', getRouter());
   }
