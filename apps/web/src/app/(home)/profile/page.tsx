@@ -1,10 +1,11 @@
-import Modal from '@/components/modal/ModalProfile'
-import React from 'react'
+import SideBarProf from "@/components/profilecomp/SideBar"
 
-export default function page() {
+const Profile = () => {
   return (
     <div>
-      {/* <Modal /> */}
+      <SideBarProf/>
     </div>
   )
 }
+
+export default Profile
