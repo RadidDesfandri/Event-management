@@ -21,6 +21,8 @@ const ListEvents = async () => {
         <section id='event' className='lg:w-[800px] h-full my-6'>
             <div className='grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3'>
                 {result.event.map((item) => {
+                    console.log(result);
+
                     return (
                         <CardEvent key={item.id} data={item} />
                     )

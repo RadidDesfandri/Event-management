@@ -1,6 +1,5 @@
 import All from "@/components/profilecomp/All"
 import SideBarProf from "@/components/profilecomp/SideBar"
-import Top from "@/components/profilecomp/Top"
 
 const Profile = () => {
   return (
