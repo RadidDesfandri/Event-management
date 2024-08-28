@@ -40,23 +40,28 @@ export class ReviewController {
 
     async getReview(req: Request, res: Response) {
         try {
+            const userId = req.user?.id
             const review = await prisma.review.findMany({
+                where: {
+                    user_Id: userId
+                },
                 select: {
                     event: {
-                        select:{
+                        select: {
                             eventName: true
                         }
                     },
                     ratings: true,
                     review: true,
                     user: {
-                        select:{
+                        select: {
                             username: true,
                             email: true,
                             avatar: true
                         }
                     }
-                }
+                },
+                orderBy: [{ id: "desc" }]
             })
 
             return res.status(200).send({

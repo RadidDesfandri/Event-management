@@ -6,7 +6,7 @@ import { IoTicket } from 'react-icons/io5'
 
 function SideBarProf() {
   return (
-    <div className='hidden static h-screen top-0 lg:block w-[350px] bg-blue-950'>
+    <div className='sticky z-20 top-0 h-[490px] min-h-screen hidden w-[350px] bg-blue-950 lg:block'>
       <main className='bg-[#131e43] py-3 flex items-center justify-center'>
         <LogoLg />
       </main>
@@ -17,7 +17,7 @@ function SideBarProf() {
           <p className='text-sm'>Jelajahi Event</p>
         </Link>
 
-        <Link href={'/beranda'} className='flex items-center gap-3 text-gray-400 hover:translate-x-1 transition-all duration-150 hover:text-white'>
+        <Link href={'/profile/ticket'} className='flex items-center gap-3 text-gray-400 hover:translate-x-1 transition-all duration-150 hover:text-white'>
           <IoTicket className='w-4 h-4' />
           <p className='text-sm'>Ticket Saya</p>
         </Link>

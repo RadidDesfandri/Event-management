@@ -1,22 +1,22 @@
-"use client"
+"use client";
 
-import React from 'react'
-import { IoPersonCircle } from 'react-icons/io5'
-import { UserState } from '../types/user'
-import { useAppSelector } from '@/redux/hooks'
+import React from "react";
+import { IoPersonCircle } from "react-icons/io5";
+import { UserState } from "../types/user";
+import { useAppSelector } from "@/redux/hooks";
 
-const Top = () => {
-  const user: UserState = useAppSelector((state) => state.user)
-  const username = user.username.toUpperCase()
+const Top = ({ text }: { text: string }) => {
+  const user: UserState = useAppSelector((state) => state.user);
+  const username = user.username.toUpperCase();
   return (
-    <div className='w-full border-b-2 px-3 py-4 lg:px-8 lg:py-6 flex justify-between'>
-        <p className='text-xl text-gray-700 font-semibold'>Profile Kamu</p>
-        <main className='bg-blue-50 rounded-full px-3 py-1 items-center flex gap-3'>
-            <IoPersonCircle className='w-5 h-5 text-blue-900'/>
-            <p className='text-gray-900 font-light'>{username}</p>
-        </main>
+    <div className="flex w-full justify-between border-b-2 px-3 py-4 lg:px-8 lg:py-6">
+      <p className="text-xl font-semibold text-gray-700">{text}</p>
+      <main className="flex items-center gap-3 rounded-full bg-blue-50 px-3 py-1">
+        <IoPersonCircle className="h-5 w-5 text-blue-900" />
+        <p className="font-light text-gray-900">{username}</p>
+      </main>
     </div>
-  )
-}
+  );
+};
 
-export default Top
+export default Top;

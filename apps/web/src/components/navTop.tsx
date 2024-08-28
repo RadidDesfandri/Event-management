@@ -255,7 +255,7 @@ export default function NavTop() {
                             <div className='pt-3 border-b pb-3'>
                                 <Link href={'/dashboard'}><p className='py-2 px-2 font-semibold text-gray-700 hover:bg-gray-200 rounded-md transition-all duration-100'>Dashboard</p></Link>
                                 <Link href={'/profile'}><p className=' py-2 px-2 font-semibold text-gray-700 hover:bg-gray-200 rounded-md transition-all duration-100'>Informasi dasar</p></Link>
-                                <Link href={'#'}><p className=' py-2 px-2 font-semibold text-gray-700 hover:bg-gray-200 rounded-md transition-all duration-100'>Ticket Saya</p></Link>
+                                <Link href={'/profile/ticket'}><p className=' py-2 px-2 font-semibold text-gray-700 hover:bg-gray-200 rounded-md transition-all duration-100'>Ticket Saya</p></Link>
                             </div>
                             <div className='mt-3 cursor-pointer flex items-center justify-between hover:bg-gray-200 rounded-md transition-all duration-100'>
                                 <p onClick={handleLogOutDesk} className='py-2 px-2 font-semibold text-red-700 '>Keluar</p>

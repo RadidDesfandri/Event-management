@@ -16,8 +16,8 @@ export class ReviewRouter {
     }
 
     private initializeRouter(): void {
-        this.router.post('/:id' ,this.reviewMiddleware.verifyToken ,this.reviewController.createReview)
-        this.router.get('/get', this.reviewController.getReview)
+        this.router.get('/get', this.reviewMiddleware.verifyToken, this.reviewController.getReview)
+        this.router.post('/:id', this.reviewMiddleware.verifyToken, this.reviewController.createReview)
     }
 
     getRouter(): Router {
