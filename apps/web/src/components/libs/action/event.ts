@@ -20,7 +20,7 @@ export const getEvent = async (page: any) => {
 
 export async function getEventById(id: string) {
     const res = await fetch(`http://localhost:8000/api/events/${id}`, {
-        next: { revalidate: 200 }
+        next: { revalidate: 200 }   
     })
     const data = await res.json();
     return data
